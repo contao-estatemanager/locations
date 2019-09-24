@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+  <file datatype="php" original="src/Resources/contao/languages/en/tl_page.php" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="tl_page.location.0">
+        <source>Location</source>
+        <target>Standort</target>
+      </trans-unit>
+      <trans-unit id="tl_page.location.1">
+        <source>Here you can assign a location to the page in order to access it later via modules or insert tags.</source>
+        <target>Hier können Sie der Seite einen Standort zuweisen um später über Module oder Insert-Tags darauf zugreifen zu können.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

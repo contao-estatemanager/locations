@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+  <file datatype="php" original="src/Resources/contao/languages/en/modules.php" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="MOD.department.0">
+        <source>Department</source>
+        <target>Abteilungen</target>
+      </trans-unit>
+      <trans-unit id="MOD.department.1">
+        <source>Manage departments</source>
+        <target>Abteilungen verwalten</target>
+      </trans-unit>
+
+      <trans-unit id="FMD.realEstateLocationList.0">
+        <source>Provider / Location list</source>
+        <target>Anbieter / Standortliste</target>
+      </trans-unit>
+      <trans-unit id="FMD.realEstateLocationList.1">
+        <source>Generates a provider / location list.</source>
+        <target>Erzeugt eine Anbieter / Standortliste.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

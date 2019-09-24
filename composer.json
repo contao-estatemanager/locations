@@ -1,0 +1,45 @@
+{
+  "name":"contao-estatemanager/locations",
+  "type":"contao-bundle",
+  "description":"Locations Extension for Contao EstateManager",
+  "keywords":["contao","estatemanager","real estate","estate","property","location"],
+  "homepage":"https://www.contao-estatemanager.com/",
+  "license":"proprietary",
+  "authors":[
+    {
+      "name":"Oveleon",
+      "homepage":"https://www.oveleon.de/",
+      "role":"Developer"
+    }
+  ],
+  "require":{
+    "php":">=7.1",
+    "contao/core-bundle":"^4.4",
+    "contao-estatemanager/core": "*"
+  },
+  "require-dev": {
+    "contao/manager-plugin": "^2.0"
+  },
+  "conflict": {
+    "contao/core": "*",
+    "contao/core-bundle": "4.4.1",
+    "contao/manager-plugin": "<2.0 || >=3.0"
+  },
+  "autoload":{
+    "psr-4": {
+      "ContaoEstateManager\\Locations\\": "src/"
+    },
+    "classmap": [
+      "src/Resources/contao/"
+    ],
+    "exclude-from-classmap": [
+      "src/Resources/contao/config/",
+      "src/Resources/contao/dca/",
+      "src/Resources/contao/languages/",
+      "src/Resources/contao/templates/"
+    ]
+  },
+  "extra":{
+    "contao-manager-plugin": "ContaoEstateManager\\Locations\\ContaoManager\\Plugin"
+  }
+}

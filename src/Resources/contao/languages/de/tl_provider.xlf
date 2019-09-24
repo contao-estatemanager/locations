@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+  <file datatype="php" original="src/Resources/contao/languages/en/tl_provider.php" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="tl_provider.locationSRC.0">
+        <source>Location image</source>
+        <target>Standort Foto</target>
+      </trans-unit>
+      <trans-unit id="tl_provider.locationSRC.1">
+        <source>Here you can choose a photo for your location of the office.</source>
+        <target>Hier könen Sie ein Foto für Ihren Standort der des Büros wählen.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

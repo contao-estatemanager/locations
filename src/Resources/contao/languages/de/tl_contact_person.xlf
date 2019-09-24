@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+  <file datatype="php" original="src/Resources/contao/languages/en/tl_contact_person.php" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="tl_contact_person.department.0">
+        <source>Department</source>
+        <target>Abteilung</target>
+      </trans-unit>
+      <trans-unit id="tl_contact_person.department.1">
+        <source>Please enter a department.</source>
+        <target>Bitte geben Sie die Abteilung an, in der der Mitarbeiter sich befindet.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

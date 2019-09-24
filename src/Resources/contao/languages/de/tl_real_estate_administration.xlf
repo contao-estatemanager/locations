@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+  <file datatype="php" original="src/Resources/contao/languages/en/tl_real_estate_administration.php" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="tl_real_estate_administration.department.0">
+        <source>Manage Departments</source>
+        <target>Abteilungen verwalten</target>
+      </trans-unit>
+      <trans-unit id="tl_real_estate_administration.department.1">
+        <source>Manage departments for provider / locations in the system.</source>
+        <target>Verwalten Sie die Abteilungen der Anbieter / Standorte im System.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

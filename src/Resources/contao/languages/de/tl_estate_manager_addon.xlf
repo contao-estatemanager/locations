@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+  <file datatype="php" original="src/Resources/contao/languages/en/tl_estate_manager_addon.php" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="tl_estate_manager_addon.addon_locations_license.0">
+        <source>Addon Locations Lizenz</source>
+        <target>Addon Standorte Lizenz</target>
+      </trans-unit>
+      <trans-unit id="tl_estate_manager_addon.addon_locations_license.1">
+        <source>Please enter your license key here</source>
+        <target>Bitte geben Sie hier Ihren Lizenzschlüssel ein</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

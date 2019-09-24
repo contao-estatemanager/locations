@@ -1,0 +1,12 @@
+<?php $this->extend('block_unsearchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<?php if (empty($this->locations)): ?>
+    <p class="empty"><?= $this->empty ?></p>
+<?php else: ?>
+    <?= implode('', $this->locations) ?>
+    <?= $this->pagination ?>
+<?php endif; ?>
+
+<?php $this->endblock(); ?>

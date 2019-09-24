@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+  <file datatype="php" original="src/Resources/contao/languages/en/default.php" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="MSC.location_contact_person">
+        <source>Contact persons</source>
+        <target>Kontaktpersonen</target>
+      </trans-unit>
+      <trans-unit id="MSC.location_location">
+        <source>Locations</source>
+        <target>Standorte</target>
+      </trans-unit>
+      <trans-unit id="MSC.location_department">
+        <source>Departments</source>
+        <target>Abteilungen</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
