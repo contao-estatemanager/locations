@@ -74,6 +74,14 @@
         <source>Here you can overwrite the default template.</source>
         <target>Hier können Sie das Standard-Template überschreiben.</target>
       </trans-unit>
+      <trans-unit id="tl_module.locationImgSize.0">
+        <source>Location image size</source>
+        <target>Standort Bildgröße</target>
+      </trans-unit>
+      <trans-unit id="tl_module.locationImgSize.1">
+        <source>Here you can set the image dimensions and the resize mode.</source>
+        <target>Hier können Sie die Abmessungen des Bildes und den Skalierungsmodus festlegen.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

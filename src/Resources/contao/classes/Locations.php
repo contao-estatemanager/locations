@@ -12,7 +12,7 @@ namespace ContaoEstateManager\Locations;
 
 use ContaoEstateManager\ProviderModel;
 
-class Locations extends \System
+class Locations
 {
     /**
      * Replace insert tags

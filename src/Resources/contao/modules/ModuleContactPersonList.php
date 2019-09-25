@@ -134,61 +134,32 @@ class ModuleContactPersonList extends \Module
             $strClass = ' ' . $objLocation->cssClass . $strClass;
         }
 
+        $objTemplate->class = $strClass;
+        $objTemplate->addImage = false;
+        $objTemplate->contacts = array();
+        $objTemplate->showLocationInformation = $this->showLocationInformation;
+
         $arrMetaFields = \StringUtil::deserialize($this->locationMetaFields, true);
 
         foreach ($arrMetaFields as $metaField)
         {
-            if($objLocation->{$metaField})
+            switch ($metaField)
             {
-                // ToDo: Add Images
-                switch ($metaField)
-                {
-                    case 'logo':
-
-                        break;
-                    case 'foto':
-
-                        break;
-                    default:
+                case 'foto':
+                    $objTemplate->addImage = $this->addSingleImageToTemplate($objTemplate, $objLocation->locationSRC, $this->locationImgSize);
+                    break;
+                default:
+                    if($objLocation->{$metaField})
+                    {
                         $objTemplate->{$metaField} = $objLocation->{$metaField};
-                }
+                    }
             }
         }
-
-        $objTemplate->class = $strClass;
-        $objTemplate->addImage = false;
-        $objTemplate->contacts = array();
 
         if(array_key_exists($objLocation->id, $this->arrContacts))
         {
             $objTemplate->contacts = $this->parseContactPersons($this->arrContacts[ $objLocation->id ]);
         }
-
-        // Add an image
-        /*if ($objLocation->addImage && $objLocation->singleSRC != '')
-        {
-            $objModel = \FilesModel::findByUuid($objLocation->singleSRC);
-
-            if ($objModel !== null && is_file(TL_ROOT . '/' . $objModel->path))
-            {
-                // Do not override the field now that we have a model registry (see #6303)
-                $arrLocation = $objLocation->row();
-
-                // Override the default image size
-                if ($this->imgSize != '')
-                {
-                    $size = \StringUtil::deserialize($this->imgSize);
-
-                    if ($size[0] > 0 || $size[1] > 0 || is_numeric($size[2]))
-                    {
-                        $arrLocation['size'] = $this->imgSize;
-                    }
-                }
-
-                $arrLocation['singleSRC'] = $objModel->path;
-                $this->addImageToTemplate($objTemplate, $arrLocation, null, null, $objModel);
-            }
-        }*/
 
         return $objTemplate->parse();
     }
@@ -238,55 +209,70 @@ class ModuleContactPersonList extends \Module
             $strClass = ' ' . $objContact->cssClass . $strClass;
         }
 
+        $objTemplate->class = $strClass;
+        $objTemplate->addImage = false;
+
         $arrMetaFields = \StringUtil::deserialize($this->contactPersonMetaFields, true);
 
         foreach ($arrMetaFields as $metaField)
         {
-            if($objContact->{$metaField})
+            switch ($metaField)
             {
-                // ToDo: Add Images
-                switch ($metaField)
-                {
-                    case 'foto':
-
-                        break;
-                    default:
+                case 'foto':
+                    $objTemplate->addImage = $this->addSingleImageToTemplate($objTemplate, $objContact->singleSRC, $this->contactPersonImgSize);
+                    break;
+                default:
+                    if($objContact->{$metaField})
+                    {
                         $objTemplate->{$metaField} = $objContact->{$metaField};
-                }
-
+                    }
             }
         }
 
-        $objTemplate->class = $strClass;
-        $objTemplate->addImage = false;
+        return $objTemplate->parse();
+    }
 
-        // Add an image
-        /*if ($objContact->addImage && $objContact->singleSRC != '')
+    /**
+     * Add image to template
+     *
+     * @param $objTemplate
+     * @param $varSingleSrc
+     * @param $imgSize
+     *
+     * @return boolean
+     */
+    protected function addSingleImageToTemplate(&$objTemplate, $varSingleSrc, $imgSize)
+    {
+        if ($varSingleSrc)
         {
-            $objModel = \FilesModel::findByUuid($objContact->singleSRC);
+            if (!($varSingleSrc instanceof \FilesModel) && \Validator::isUuid($varSingleSrc))
+            {
+                $objModel = \FilesModel::findByUuid($varSingleSrc);
+            }
+            else
+            {
+                $objModel = $varSingleSrc;
+            }
 
             if ($objModel !== null && is_file(TL_ROOT . '/' . $objModel->path))
             {
-                // Do not override the field now that we have a model registry (see #6303)
-                $arrLocation = $objContact->row();
+                $image = array
+                (
+                    'id'         => $objModel->id,
+                    'uuid'       => $objModel->uuid,
+                    'name'       => $objModel->basename,
+                    'singleSRC'  => $objModel->path,
+                    'filesModel' => $objModel->current(),
+                    'size'       => $imgSize,
+                );
 
-                // Override the default image size
-                if ($this->imgSize != '')
-                {
-                    $size = \StringUtil::deserialize($this->imgSize);
+                $this->addImageToTemplate($objTemplate, $image, null, null, $objModel);
 
-                    if ($size[0] > 0 || $size[1] > 0 || is_numeric($size[2]))
-                    {
-                        $arrLocation['size'] = $this->imgSize;
-                    }
-                }
-
-                $arrLocation['singleSRC'] = $objModel->path;
-                $this->addImageToTemplate($objTemplate, $arrLocation, null, null, $objModel);
+                return true;
             }
-        }*/
+        }
 
-        return $objTemplate->parse();
+        return false;
     }
 
     /**

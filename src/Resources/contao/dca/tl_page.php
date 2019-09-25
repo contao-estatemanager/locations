@@ -8,21 +8,23 @@
  * @license   https://www.contao-estatemanager.com/lizenzbedingungen.html
  */
 
-// Extend the regular palette
-Contao\CoreBundle\DataContainer\PaletteManipulator::create()
-    ->addField(array('location'), 'setMarketingType', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
-    ->applyToPalette('regular', 'tl_page')
-;
+if(ContaoEstateManager\Locations\AddonManager::valid()) {
+    // Extend the regular palette
+    Contao\CoreBundle\DataContainer\PaletteManipulator::create()
+        ->addField(array('location'), 'setMarketingType', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
+        ->applyToPalette('regular', 'tl_page')
+    ;
 
-$GLOBALS['TL_DCA']['tl_page']['fields']['location'] = array(
-    'label'                   => &$GLOBALS['TL_LANG']['tl_page']['location'],
-    'exclude'                 => true,
-    'inputType'               => 'select',
-    'options_callback'        => array('tl_page_locations' ,'getLocations'),
-    'reference'               => &$GLOBALS['TL_LANG']['tl_page'],
-    'eval'                    => array('includeBlankOption'=>true,'tl_class'=>'w50'),
-    'sql'                     => "varchar(6) NOT NULL default ''",
-);
+    $GLOBALS['TL_DCA']['tl_page']['fields']['location'] = array(
+        'label'                   => &$GLOBALS['TL_LANG']['tl_page']['location'],
+        'exclude'                 => true,
+        'inputType'               => 'select',
+        'options_callback'        => array('tl_page_locations' ,'getLocations'),
+        'reference'               => &$GLOBALS['TL_LANG']['tl_page'],
+        'eval'                    => array('includeBlankOption'=>true,'tl_class'=>'w50'),
+        'sql'                     => "varchar(6) NOT NULL default ''",
+    );
+}
 
 /**
  * Provide miscellaneous methods that are used by the data configuration array.

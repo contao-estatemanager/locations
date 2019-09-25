@@ -8,7 +8,6 @@
  * @license   https://www.contao-estatemanager.com/lizenzbedingungen.html
  */
 
-
 $GLOBALS['TL_DCA']['tl_department'] = array
 (
 
