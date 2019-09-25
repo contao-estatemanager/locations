@@ -14,6 +14,35 @@
         <source>Departments</source>
         <target>Abteilungen</target>
       </trans-unit>
+
+      <trans-unit id="MSC.location_page.0">
+        <source>Page</source>
+        <target>Seite</target>
+      </trans-unit>
+      <trans-unit id="MSC.location_page.1">
+        <source>Uses the location stored in the page tree.</source>
+        <target>Verwendet den im Seitenbaum hinterlegten Standort.</target>
+      </trans-unit>
+      <trans-unit id="MSC.location_custom.0">
+        <source>Own selection</source>
+        <target>Eigene Auswahl</target>
+      </trans-unit>
+      <trans-unit id="MSC.location_custom.1">
+        <source>Displays only locations that have been selected in the module.</source>
+        <target>Gibt nur Standorte aus, welche im Modul ausgwählt wurden.</target>
+      </trans-unit>
+      <trans-unit id="MSC.location_all.0">
+        <source>All</source>
+        <target>Alle</target>
+      </trans-unit>
+      <trans-unit id="MSC.location_all.1">
+        <source>Outputs all locations.</source>
+        <target>Gibt alle Standorte aus.</target>
+      </trans-unit>
+      <trans-unit id="MSC.emptyLocationList">
+        <source>Currently there are no locations available.</source>
+        <target>Zurzeit sind keine Standorte vorhanden.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

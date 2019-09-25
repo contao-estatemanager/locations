@@ -2,18 +2,21 @@
 <xliff version="1.1">
   <file datatype="php" original="src/Resources/contao/languages/en/tl_module.php" source-language="en" target-language="de">
     <body>
-      <trans-unit id="tl_module.list_legend">
-        <source>List settings</source>
-        <target>Listen-Einstellungen</target>
+      <trans-unit id="tl_module.locationMode.0">
+        <source>Output mode</source>
+        <target>Ausgabe-Modus</target>
       </trans-unit>
-
-      <trans-unit id="tl_module.useSpecificLocations.0">
-        <source>Output only selected locations</source>
-        <target>Nur ausgewählte Standorte ausgeben</target>
+      <trans-unit id="tl_module.locationMode.1">
+        <source>Here you define which locations are to be considered and output.</source>
+        <target>Definieren Sie hier, welche Standorte berücksichtigt und ausgegeben werden sollen.</target>
       </trans-unit>
-      <trans-unit id="tl_module.useSpecificLocations.1">
-        <source>Select this option to display only chosen locations in this list.</source>
-        <target>Wählen Sie diese Option um nur ausgewählte Standorte in dieser Liste auszugeben.</target>
+      <trans-unit id="tl_module.showLocationInformation.0">
+        <source>Output location information</source>
+        <target>Standortinformation ausgeben</target>
+      </trans-unit>
+      <trans-unit id="tl_module.showLocationInformation.1">
+        <source>Define here whether the location information will be shown.</source>
+        <target>Definieren Sie hier ob die Standortinformationen ausgegeben werden sollen.</target>
       </trans-unit>
       <trans-unit id="tl_module.useSpecificDepartments.0">
         <source>Output only selected departments</source>
@@ -39,19 +42,35 @@
         <source>Select the departments to be displayed in the list.</source>
         <target>Wählen Sie die Abteilungen welche in der Liste ausgegeben werden sollen.</target>
       </trans-unit>
-      <trans-unit id="tl_module.location_metaFields.0">
-        <source>Meta-Fields</source>
-        <target>Meta-Felder</target>
+      <trans-unit id="tl_module.contactPersonMetaFields.0">
+        <source>Contact person Meta-Fields</source>
+        <target>Kontaktperson Meta-Felder</target>
       </trans-unit>
-      <trans-unit id="tl_module.location_metaFields.1">
+      <trans-unit id="tl_module.contactPersonMetaFields.1">
         <source>Here you can select the meta fields.</source>
         <target>Hier können Sie die Meta-Felder auswählen.</target>
       </trans-unit>
-      <trans-unit id="tl_module.location_template.0">
+      <trans-unit id="tl_module.locationMetaFields.0">
+        <source>Location Meta-Fields</source>
+        <target>Standort Meta-Felder</target>
+      </trans-unit>
+      <trans-unit id="tl_module.locationMetaFields.1">
+        <source>Here you can select the meta fields.</source>
+        <target>Hier können Sie die Meta-Felder auswählen.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.locationTemplate.0">
         <source>Location Template</source>
         <target>Standort Template</target>
       </trans-unit>
-      <trans-unit id="tl_module.location_template.1">
+      <trans-unit id="tl_module.locationTemplate.1">
+        <source>Here you can overwrite the default template.</source>
+        <target>Hier können Sie das Standard-Template überschreiben.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.contactPersonTemplate.0">
+        <source>Contact person template</source>
+        <target>Kontaktperson Template</target>
+      </trans-unit>
+      <trans-unit id="tl_module.contactPersonTemplate.1">
         <source>Here you can overwrite the default template.</source>
         <target>Hier können Sie das Standard-Template überschreiben.</target>
       </trans-unit>

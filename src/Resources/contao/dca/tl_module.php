@@ -9,24 +9,26 @@
  */
 
 // Add palettes
-$GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'useSpecificLocations';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'locationMode';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'useSpecificDepartments';
 
 // Palettes
-$GLOBALS['TL_DCA']['tl_module']['palettes']['realEstateLocationList'] = '{title_legend},name,headline,type;{list_legend},useSpecificLocations,useSpecificDepartments;{config_legend},numberOfItems,perPage;{image_legend:hide},imgSize;{template_legend:hide},location_metaFields,location_template,customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['realEstateContactPersonList'] = '{title_legend},name,headline,type;{config_legend},locationMode,useSpecificDepartments,showLocationInformation;{image_legend:hide},imgSize;{template_legend:hide},locationMetaFields,contactPersonMetaFields,locationTemplate,contactPersonTemplate,customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
 
 // Subpalettes
-$GLOBALS['TL_DCA']['tl_module']['subpalettes']['useSpecificLocations'] = 'locations';
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['locationMode_location_custom'] = 'locations';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['useSpecificDepartments'] = 'departments';
 
 // Fields
-$GLOBALS['TL_DCA']['tl_module']['fields']['useSpecificLocations'] = array
+$GLOBALS['TL_DCA']['tl_module']['fields']['locationMode'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['useSpecificLocations'],
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['locationMode'],
     'exclude'                 => true,
-    'inputType'               => 'checkbox',
-    'eval'                    => array('submitOnChange'=>true,'tl_class'=>'w50 clr'),
-    'sql'                     => "char(1) NOT NULL default ''"
+    'inputType'               => 'select',
+    'options'                 => array('location_page', 'location_all', 'location_custom'),
+    'reference'               => &$GLOBALS['TL_LANG']['MSC'],
+    'eval'                    => array('helpwizard'=>true, 'submitOnChange'=>true,'tl_class'=>'w50 clr'),
+    'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['useSpecificDepartments'] = array
@@ -38,13 +40,22 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['useSpecificDepartments'] = array
     'sql'                     => "char(1) NOT NULL default ''"
 );
 
+$GLOBALS['TL_DCA']['tl_module']['fields']['showLocationInformation'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['showLocationInformation'],
+    'exclude'                 => true,
+    'inputType'               => 'checkbox',
+    'eval'                    => array('tl_class'=>'w50 clr'),
+    'sql'                     => "char(1) NOT NULL default ''"
+);
+
 $GLOBALS['TL_DCA']['tl_module']['fields']['locations'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['locations'],
     'exclude'                 => true,
     'inputType'               => 'checkbox',
     'options_callback'        => array('tl_module_locations', 'getLocations'),
-    'eval'                    => array('includeBlankOption'=>true, 'multiple'=>true,'tl_class'=>'w50 clr'),
+    'eval'                    => array('includeBlankOption'=>true, 'multiple'=>true,'mandatory'=>true,'tl_class'=>'w50 clr'),
     'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
@@ -58,21 +69,31 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['departments'] = array
     'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['location_metaFields'] = array
+$GLOBALS['TL_DCA']['tl_module']['fields']['locationMetaFields'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['location_metaFields'],
-    'default'                 => array('location_location', 'location_department', 'location_contact_person'),
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['locationMetaFields'],
+    'default'                 => array('firma', 'ort', 'strasse', 'hausnummer', 'telefon', 'email'),
     'exclude'                 => true,
     'inputType'               => 'checkbox',
-    'options'                 => array('location_location', 'location_department', 'location_contact_person'),
-    'reference'               => &$GLOBALS['TL_LANG']['MSC'],
+    'options'                 => array('firma', 'postleitzahl', 'ort', 'strasse', 'hausnummer', 'bundesland', 'land', 'telefon', 'email', 'logo', 'foto'),
     'eval'                    => array('multiple'=>true),
     'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['location_template'] = array
+$GLOBALS['TL_DCA']['tl_module']['fields']['contactPersonMetaFields'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['location_template'],
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['contactPersonMetaFields'],
+    'default'                 => array('anrede', 'vorname', 'nachname'),
+    'exclude'                 => true,
+    'inputType'               => 'checkbox',
+    'options'                 => array('firma', 'anrede', 'vorname', 'name', 'titel', 'position', 'email_zentrale', 'email_direkt', 'email_privat', 'email_sonstige', 'email_feedback', 'tel_zentrale', 'tel_durchw', 'tel_fax', 'tel_handy', 'tel_privat', 'tel_sonstige', 'strasse', 'hausnummer', 'plz', 'ort', 'land', 'foto'),
+    'eval'                    => array('multiple'=>true),
+    'sql'                     => "varchar(255) NOT NULL default ''"
+);
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['locationTemplate'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['locationTemplate'],
     'default'                 => 'location_default',
     'exclude'                 => true,
     'inputType'               => 'select',
@@ -81,10 +102,21 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['location_template'] = array
     'sql'                     => "varchar(64) NOT NULL default ''"
 );
 
+$GLOBALS['TL_DCA']['tl_module']['fields']['contactPersonTemplate'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['contactPersonTemplate'],
+    'default'                 => 'location_default',
+    'exclude'                 => true,
+    'inputType'               => 'select',
+    'options_callback'        => array('tl_module_locations', 'geContactPersonTemplates'),
+    'eval'                    => array('tl_class'=>'w50'),
+    'sql'                     => "varchar(64) NOT NULL default ''"
+);
+
 /**
  * Provide miscellaneous methods that are used by the data configuration array.
  *
- * @author Daniele Sciannimanica <daniele@oveleon>
+ * @author Daniele Sciannimanica <daniele@oveleon.de>
  */
 
 class tl_module_locations extends Backend
@@ -97,6 +129,16 @@ class tl_module_locations extends Backend
     public function getLocationTemplates()
     {
         return $this->getTemplateGroup('location_');
+    }
+
+    /**
+     * Return all location templates as array
+     *
+     * @return array
+     */
+    public function geContactPersonTemplates()
+    {
+        return $this->getTemplateGroup('contact_person_');
     }
 
     /**

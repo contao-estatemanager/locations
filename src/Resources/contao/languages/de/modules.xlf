@@ -11,13 +11,13 @@
         <target>Abteilungen verwalten</target>
       </trans-unit>
 
-      <trans-unit id="FMD.realEstateLocationList.0">
-        <source>Provider / Location list</source>
-        <target>Anbieter / Standortliste</target>
+      <trans-unit id="FMD.realEstateContactPersonList.0">
+        <source>Contact person / location list</source>
+        <target>Kontaktpersonen- / Standortiste</target>
       </trans-unit>
-      <trans-unit id="FMD.realEstateLocationList.1">
-        <source>Generates a provider / location list.</source>
-        <target>Erzeugt eine Anbieter / Standortliste.</target>
+      <trans-unit id="FMD.realEstateContactPersonList.1">
+        <source>Generates a contact person / location list.</source>
+        <target>Erzeugt eine Kontaktpersonen- / Standortliste.</target>
       </trans-unit>
     </body>
   </file>

@@ -1,3 +1,40 @@
-<div class="location_default">
-    Standort - Standardtemplate
+<?php if($this->showLocationInformation): ?>
+<div class="location_default<?= $this->class ?>">
+    <address class="location_info">
+        <?php if($this->firma):?>
+            <span class="company"><?=$this->firma?></span>
+        <?php endif; ?>
+        <?php if($this->postleitzahl):?>
+            <span class="postal_code"><?=$this->postleitzahl?></span>
+        <?php endif; ?>
+        <?php if($this->ort):?>
+            <span class="city"><?=$this->ort?></span>
+        <?php endif; ?>
+        <?php if($this->strasse):?>
+            <span class="street"><?=$this->strasse?></span>
+        <?php endif; ?>
+        <?php if($this->hausnummer):?>
+            <span class="street_number"><?=$this->hausnummer?></span>
+        <?php endif; ?>
+        <?php if($this->bundesland):?>
+            <span class="federal_state"><?=$this->bundesland?></span>
+        <?php endif; ?>
+        <?php if($this->land):?>
+            <span class="country"><?=$this->land?></span>
+        <?php endif; ?>
+        <?php if($this->telefon):?>
+            <span class="phone"><?=$this->telefon?></span>
+        <?php endif; ?>
+        <?php if($this->email):?>
+            <span class="email"><?=$this->email?></span>
+        <?php endif; ?>
+    </address>
+    <div class="contact_person_info">
+<?php endif; ?>
+<?php if(count($this->contacts)): ?>
+    <?=implode('', $this->contacts)?>
+<?php endif; ?>
+<?php if($this->showLocationInformation): ?>
+    </div>
 </div>
+<?php endif; ?>

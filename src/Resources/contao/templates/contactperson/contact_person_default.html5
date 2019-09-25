@@ -1,0 +1,68 @@
+<address class="contact_person_default<?= $this->class ?>">
+    <?php if($this->firma):?>
+        <span class="company"><?=$this->firma?></span>
+    <?php endif; ?>
+    <?php if($this->anrede):?>
+        <span class="salutation"><?=$this->anrede?></span>
+    <?php endif; ?>
+    <?php if($this->vorname):?>
+        <span class="firstname"><?=$this->vorname?></span>
+    <?php endif; ?>
+    <?php if($this->name):?>
+        <span class="name"><?=$this->name?></span>
+    <?php endif; ?>
+    <?php if($this->titel):?>
+        <span class="title"><?=$this->titel?></span>
+    <?php endif; ?>
+    <?php if($this->position):?>
+        <span class="position"><?=$this->position?></span>
+    <?php endif; ?>
+    <?php if($this->email_zentrale):?>
+        <span class="email_company"><?=$this->email_zentrale?></span>
+    <?php endif; ?>
+    <?php if($this->email_direkt):?>
+        <span class="email_direct"><?=$this->email_direkt?></span>
+    <?php endif; ?>
+    <?php if($this->email_privat):?>
+        <span class="email_privat"><?=$this->email_privat?></span>
+    <?php endif; ?>
+    <?php if($this->email_sonstige):?>
+        <span class="email_misc"><?=$this->email_sonstige?></span>
+    <?php endif; ?>
+    <?php if($this->email_feedback):?>
+        <span class="email_feedback"><?=$this->email_feedback?></span>
+    <?php endif; ?>
+    <?php if($this->tel_zentrale):?>
+        <span class="phone_company"><?=$this->tel_zentrale?></span>
+    <?php endif; ?>
+    <?php if($this->tel_durchw):?>
+        <span class="phone_person"><?=$this->tel_durchw?></span>
+    <?php endif; ?>
+    <?php if($this->tel_fax):?>
+        <span class="phone_fax"><?=$this->tel_fax?></span>
+    <?php endif; ?>
+    <?php if($this->tel_handy):?>
+        <span class="phone_mobile"><?=$this->tel_handy?></span>
+    <?php endif; ?>
+    <?php if($this->tel_privat):?>
+        <span class="phone_privat"><?=$this->tel_privat?></span>
+    <?php endif; ?>
+    <?php if($this->tel_sonstige):?>
+        <span class="phone_misc"><?=$this->tel_sonstige?></span>
+    <?php endif; ?>
+    <?php if($this->strasse):?>
+        <span class="street"><?=$this->strasse?></span>
+    <?php endif; ?>
+    <?php if($this->hausnummer):?>
+        <span class="street_number"><?=$this->hausnummer?></span>
+    <?php endif; ?>
+    <?php if($this->plz):?>
+        <span class="postal_code"><?=$this->plz?></span>
+    <?php endif; ?>
+    <?php if($this->ort):?>
+        <span class="city"><?=$this->ort?></span>
+    <?php endif; ?>
+    <?php if($this->land):?>
+        <span class="country"><?=$this->land?></span>
+    <?php endif; ?>
+</address>

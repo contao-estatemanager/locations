@@ -51,6 +51,34 @@ class Locations extends \System
             return false;
         }
 
+        switch($arrTag[2])
+        {
+            case 'address':
+                $strAddress = array();
+
+                $plz = $objLocation->postleitzahl;
+                $ort = $objLocation->ort;
+
+                if($objLocation->hausnummer && $objLocation->strasse)
+                {
+                    $strAddress[] = $objLocation->strasse . ' ' . $objLocation->hausnummer;
+                }elseif($objLocation->strasse)
+                {
+                    $strAddress[] = $objLocation->strasse;
+                }
+
+                if($plz && $ort)
+                {
+                    $strAddress[] = $plz . ' ' . $ort;
+                }
+                elseif($ort)
+                {
+                    $strAddress[] = $ort;
+                }
+
+                return implode(', ', $strAddress);
+        }
+
         return $objLocation->{$arrTag[2]};
     }
 }
