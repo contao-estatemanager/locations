@@ -75,7 +75,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         'default'                 => array('firma', 'ort', 'strasse', 'hausnummer', 'telefon', 'email'),
         'exclude'                 => true,
         'inputType'               => 'checkbox',
-        'options'                 => array('firma', 'postleitzahl', 'ort', 'strasse', 'hausnummer', 'bundesland', 'land', 'telefon', 'fax', 'email', 'foto'),
+        'options'                 => array('firma', 'postleitzahl', 'ort', 'strasse', 'hausnummer', 'bundesland', 'land', 'telefon', 'telefon2', 'fax', 'email', 'singleSRC'),
         'eval'                    => array('multiple'=>true),
         'sql'                     => "varchar(255) NOT NULL default ''"
     );

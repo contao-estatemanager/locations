@@ -145,8 +145,8 @@ class ModuleContactPersonList extends \Module
         {
             switch ($metaField)
             {
-                case 'foto':
-                    $objTemplate->addImage = $this->addSingleImageToTemplate($objTemplate, $objLocation->locationSRC, $this->locationImgSize);
+                case 'singleSRC':
+                    $objTemplate->addImage = $this->addSingleImageToTemplate($objTemplate, $objLocation->singleSRC, $this->locationImgSize);
                     break;
                 default:
                     if($objLocation->{$metaField})
