@@ -39,6 +39,10 @@
         <source>Outputs all locations.</source>
         <target>Gibt alle Standorte aus.</target>
       </trans-unit>
+      <trans-unit id="MSC.emptyContactPersonList">
+        <source>Currently there are no contact persons available.</source>
+        <target>Zurzeit sind keine Kontaktpersonen vorhanden.</target>
+      </trans-unit>
       <trans-unit id="MSC.emptyLocationList">
         <source>Currently there are no locations available.</source>
         <target>Zurzeit sind keine Standorte vorhanden.</target>

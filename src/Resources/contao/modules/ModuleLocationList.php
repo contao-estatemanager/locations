@@ -15,23 +15,17 @@ use ContaoEstateManager\ContactPersonModel;
 use ContaoEstateManager\ProviderModel;
 
 /**
- * List module for contact person and location records.
+ * List module for location records.
  *
  * @author Daniele Sciannimanica <daniele@oveleon.de>
  */
-class ModuleContactPersonList extends \Module
+class ModuleLocationList extends \Module
 {
     /**
      * Template
      * @var string
      */
     protected $strTemplate = 'mod_locationlist';
-
-    /**
-     * Contact person array
-     * @var array
-     */
-    private $arrContacts = array();
 
     /**
      * Display a wildcard in the back end
@@ -45,7 +39,7 @@ class ModuleContactPersonList extends \Module
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new \BackendTemplate('be_wildcard');
 
-            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['contactpersonlist'][0]) . ' ###';
+            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['locationlist'][0]) . ' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
@@ -62,23 +56,13 @@ class ModuleContactPersonList extends \Module
      */
     protected function compile()
     {
-        $this->Template->empty = $GLOBALS['TL_LANG']['MSC']['emptyContactPersonList'];
+        $this->Template->empty = $GLOBALS['TL_LANG']['MSC']['emptyLocationList'];
 
-        list($objLocations, $objContacts) = $this->fetchItems();
+        $objLocations = $this->fetchItems();
 
-        if($objLocations === null || $objContacts === null)
+        if($objLocations === null)
         {
             return false;
-        }
-
-        while($objContacts->next())
-        {
-            if(!array_key_exists($objContacts->pid, $this->arrContacts))
-            {
-                $this->arrContacts[ $objContacts->pid ] = array();
-            }
-
-            $this->arrContacts[ $objContacts->pid ][ $objContacts->id ] = $objContacts->current();
         }
 
         // Add the locations
@@ -136,8 +120,8 @@ class ModuleContactPersonList extends \Module
 
         $objTemplate->class = $strClass;
         $objTemplate->addImage = false;
+        $objTemplate->showLocationInformation = true;
         $objTemplate->contacts = array();
-        $objTemplate->showLocationInformation = $this->showLocationInformation;
 
         $arrMetaFields = \StringUtil::deserialize($this->locationMetaFields, true);
 
@@ -152,79 +136,6 @@ class ModuleContactPersonList extends \Module
                     if($objLocation->{$metaField})
                     {
                         $objTemplate->{$metaField} = $objLocation->{$metaField};
-                    }
-            }
-        }
-
-        if(array_key_exists($objLocation->id, $this->arrContacts))
-        {
-            $objTemplate->contacts = $this->parseContactPersons($this->arrContacts[ $objLocation->id ]);
-        }
-
-        return $objTemplate->parse();
-    }
-
-    /**
-     * Parse one or more items and return them as array
-     *
-     * @param array $arrContactPerons
-     *
-     * @return array
-     */
-    protected function parseContactPersons($arrContactPerons)
-    {
-        $limit = count($arrContactPerons);
-
-        if ($limit < 1)
-        {
-            return array();
-        }
-
-        $count = 0;
-        $arrContacts = array();
-
-        foreach ($arrContactPerons as $objContact) {
-            $arrContacts[] = $this->parseContactPerson($objContact, ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even'), $count);
-        }
-
-        return $arrContacts;
-    }
-
-    /**
-     * Parse an item and return it as string
-     *
-     * @param ProviderModel $objContact
-     * @param string        $strClass
-     * @param integer       $intCount
-     *
-     * @return string
-     */
-    protected function parseContactPerson($objContact, $strClass='', $intCount=0)
-    {
-        /** @var FrontendTemplate|object $objTemplate */
-        $objTemplate = new \FrontendTemplate($this->contactPersonTemplate);
-
-        if ($objContact->cssClass != '')
-        {
-            $strClass = ' ' . $objContact->cssClass . $strClass;
-        }
-
-        $objTemplate->class = $strClass;
-        $objTemplate->addImage = false;
-
-        $arrMetaFields = \StringUtil::deserialize($this->contactPersonMetaFields, true);
-
-        foreach ($arrMetaFields as $metaField)
-        {
-            switch ($metaField)
-            {
-                case 'foto':
-                    $objTemplate->addImage = $this->addSingleImageToTemplate($objTemplate, $objContact->singleSRC, $this->contactPersonImgSize);
-                    break;
-                default:
-                    if($objContact->{$metaField})
-                    {
-                        $objTemplate->{$metaField} = $objContact->{$metaField};
                     }
             }
         }
@@ -316,38 +227,6 @@ class ModuleContactPersonList extends \Module
 
         $objLocations = ProviderModel::findBy($arrColumns, $arrValues, $arrOptions);
 
-        // Contact persons
-        $arrColumns = array();
-        $arrValues  = array();
-        $arrOptions = array('order'=>'department ASC');
-
-        if($arrLocationsIds !== null)
-        {
-            $arrColumns[] = 'pid IN (' . implode(',',$arrLocationsIds) . ')';
-        }
-        elseif($intLocationId !== null)
-        {
-            $arrColumns[] = 'pid=?';
-            $arrValues[]  = $intLocationId;
-        }
-        else{
-            // ToDo: Überflüssig => published=1
-            $arrColumns[] = "pid!=''";
-        }
-
-        // Reduce departments
-        if($this->useSpecificDepartments)
-        {
-            $arrDepartmentIds = \StringUtil::deserialize($this->departments);
-
-            if($arrDepartmentIds !== null)
-            {
-                $arrColumns[] = 'department IN(' . implode(",", $arrDepartmentIds) . ')';
-            }
-        }
-
-        $objContacts = ContactPersonModel::findBy($arrColumns, $arrValues, $arrOptions);
-
-        return array($objLocations, $objContacts);
+        return $objLocations;
     }
 }

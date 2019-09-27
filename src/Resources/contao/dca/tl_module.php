@@ -14,6 +14,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
 
     // Palettes
     $GLOBALS['TL_DCA']['tl_module']['palettes']['realEstateContactPersonList'] = '{title_legend},name,headline,type;{config_legend},locationMode,useSpecificDepartments,showLocationInformation;{image_legend:hide},locationImgSize,contactPersonImgSize;{template_legend:hide},locationMetaFields,contactPersonMetaFields,locationTemplate,contactPersonTemplate,customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
+    $GLOBALS['TL_DCA']['tl_module']['palettes']['realEstateLocationList'] = '{title_legend},name,headline,type;{config_legend},locationMode;{image_legend:hide},locationImgSize;{template_legend:hide},locationMetaFields,locationTemplate,customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
 
     // Subpalettes
     $GLOBALS['TL_DCA']['tl_module']['subpalettes']['locationMode_location_custom'] = 'locations';
@@ -75,7 +76,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         'default'                 => array('firma', 'ort', 'strasse', 'hausnummer', 'telefon', 'email'),
         'exclude'                 => true,
         'inputType'               => 'checkbox',
-        'options'                 => array('firma', 'postleitzahl', 'ort', 'strasse', 'hausnummer', 'bundesland', 'land', 'telefon', 'telefon2', 'fax', 'email', 'singleSRC'),
+        'options'                 => array('firma', 'postleitzahl', 'ort', 'strasse', 'hausnummer', 'bundesland', 'land', 'telefon', 'telefon2', 'fax', 'email', 'beschreibung', 'singleSRC'),
         'eval'                    => array('multiple'=>true),
         'sql'                     => "varchar(255) NOT NULL default ''"
     );

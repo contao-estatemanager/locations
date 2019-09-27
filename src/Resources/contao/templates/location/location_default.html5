@@ -28,16 +28,22 @@
         <?php if($this->telefon):?>
             <span class="phone"><?=$this->telefon?></span>
         <?php endif; ?>
-        <?php if($this->email):?>
-            <span class="email"><?=$this->email?></span>
+        <?php if($this->telefon2):?>
+            <span class="phone2"><?=$this->telefon2?></span>
+        <?php endif; ?>
+        <?php if($this->fax):?>
+            <span class="fax"><?=$this->fax?></span>
+        <?php endif; ?>
+        <?php if($this->beschreibung):?>
+            <span class="description"><?=$this->beschreibung?></span>
         <?php endif; ?>
     </address>
-    <div class="contact_person_info">
 <?php endif; ?>
 <?php if(count($this->contacts)): ?>
-    <?=implode('', $this->contacts)?>
+    <div class="contact_person_info">
+        <?=implode('', $this->contacts)?>
+    </div>
 <?php endif; ?>
 <?php if($this->showLocationInformation): ?>
-    </div>
 </div>
 <?php endif; ?>

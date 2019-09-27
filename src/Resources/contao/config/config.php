@@ -24,6 +24,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
 
     // Front end modules
     $GLOBALS['FE_MOD']['estatemanager']['realEstateContactPersonList'] = '\\ContaoEstateManager\\Locations\\ModuleContactPersonList';
+    $GLOBALS['FE_MOD']['estatemanager']['realEstateLocationList'] = '\\ContaoEstateManager\\Locations\\ModuleLocationList';
 
     // Back end real estate administration modules
     $GLOBALS['TL_RAM']['provider'][] = 'department';
