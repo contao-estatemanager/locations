@@ -2,6 +2,14 @@
 <xliff version="1.1">
   <file datatype="php" original="src/Resources/contao/languages/en/tl_provider.php" source-language="en" target-language="de">
     <body>
+      <trans-unit id="tl_provider.parentProvider.0">
+        <source>Parent Provider</source>
+        <target>Übergeordneter Anbieter</target>
+      </trans-unit>
+      <trans-unit id="tl_provider.parentProvider.1">
+        <source></source>
+        <target></target>
+      </trans-unit>
       <trans-unit id="tl_provider.locationSingleSRC.0">
         <source>Location image</source>
         <target>Standort Foto</target>
