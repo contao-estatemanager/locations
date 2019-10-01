@@ -11,7 +11,7 @@
 if(ContaoEstateManager\Locations\AddonManager::valid()) {
     // Extend the regular palette
     Contao\CoreBundle\DataContainer\PaletteManipulator::create()
-        ->addField(array('location'), 'setMarketingType', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
+        ->addField(array('location', 'location_token'), 'setMarketingType', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
         ->applyToPalette('regular', 'tl_page')
     ;
 
@@ -23,6 +23,14 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         'reference'               => &$GLOBALS['TL_LANG']['tl_page'],
         'eval'                    => array('includeBlankOption'=>true,'tl_class'=>'w50'),
         'sql'                     => "varchar(6) NOT NULL default ''",
+    );
+
+    $GLOBALS['TL_DCA']['tl_page']['fields']['location_token'] = array(
+        'label'                   => &$GLOBALS['TL_LANG']['tl_page']['location_token'],
+        'exclude'                 => true,
+        'inputType'               => 'text',
+        'eval'                    => array('tl_class'=>'w50'),
+        'sql'                     => "varchar(255) NOT NULL default ''",
     );
 }
 

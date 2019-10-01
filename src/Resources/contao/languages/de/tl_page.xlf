@@ -10,6 +10,14 @@
         <source>Here you can assign a location to the page in order to access it later via modules or insert tags.</source>
         <target>Hier können Sie der Seite einen Standort zuweisen um später über Module oder Insert-Tags darauf zugreifen zu können.</target>
       </trans-unit>
+      <trans-unit id="tl_page.location_token.0">
+        <source>Location Token</source>
+        <target>Standort-Token</target>
+      </trans-unit>
+      <trans-unit id="tl_page.location_token.1">
+        <source>Here you can define a placeholder text, which can be reached via the following insert tag: {{location::token}}</source>
+        <target>Hier können Sie einen Platzhalter text definieren, welche über folgenden Insert-Tag erreichbar ist: {{location::token}}</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
