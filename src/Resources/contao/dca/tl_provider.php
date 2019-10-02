@@ -14,6 +14,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
     Contao\CoreBundle\DataContainer\PaletteManipulator::create()
         ->addField(array('locationSingleSRC', 'teamSingleSRC', 'panoramaSingleSRC'), 'singleSRC', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_AFTER)
         ->addField(array('parentProvider'), 'lizenzkennung', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_AFTER)
+        ->addField(array('beschreibung_standort'), 'beschreibung', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_AFTER)
         ->applyToPalette('default', 'tl_provider')
     ;
 
@@ -25,6 +26,15 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         'options_callback'        => array('tl_provider_locations', 'getProvider'),
         'eval'                    => array('includeBlankOption'=>true,'tl_class'=>'w50'),
         'sql'                     => "varchar(255) NOT NULL default ''"
+    );
+
+    $GLOBALS['TL_DCA']['tl_provider']['fields']['beschreibung_standort'] = array
+    (
+        'label'                   => &$GLOBALS['TL_LANG']['tl_provider']['beschreibung_standort'],
+        'exclude'                 => true,
+        'inputType'               => 'textarea',
+        'eval'                    => array('rte'=>'tinyMCE', 'tl_class'=>'clr'),
+        'sql'                     => "text NULL"
     );
 
     $GLOBALS['TL_DCA']['tl_provider']['fields']['locationSingleSRC'] = array

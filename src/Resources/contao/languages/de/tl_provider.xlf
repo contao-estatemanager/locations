@@ -10,6 +10,14 @@
         <source></source>
         <target></target>
       </trans-unit>
+      <trans-unit id="tl_provider.beschreibung_standort.0">
+        <source>Location Description</source>
+        <target>Standort Beschreibung</target>
+      </trans-unit>
+      <trans-unit id="tl_provider.beschreibung_standort.1">
+        <source>Describe your location here</source>
+        <target>Beschreiben Sie hier Ihren Standort</target>
+      </trans-unit>
       <trans-unit id="tl_provider.locationSingleSRC.0">
         <source>Location image</source>
         <target>Standort Foto</target>
