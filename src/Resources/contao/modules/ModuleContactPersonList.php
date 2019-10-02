@@ -156,9 +156,11 @@ class ModuleContactPersonList extends \Module
             }
         }
 
-        if(array_key_exists($objLocation->id, $this->arrContacts))
+        $providerContactsId = $objLocation->parentProvider ?: $objLocation->id;
+
+        if(array_key_exists($providerContactsId, $this->arrContacts))
         {
-            $objTemplate->contacts = $this->parseContactPersons($this->arrContacts[ $objLocation->id ]);
+            $objTemplate->contacts = $this->parseContactPersons($this->arrContacts[ $providerContactsId ]);
         }
 
         return $objTemplate->parse();
@@ -282,10 +284,6 @@ class ModuleContactPersonList extends \Module
      */
     protected function fetchItems()
     {
-        // Locations
-        $intLocationId = null;
-        $arrLocationsIds = null;
-
         $arrColumns = array('published=1');
         $arrValues  = array();
         $arrOptions = array();
@@ -308,13 +306,27 @@ class ModuleContactPersonList extends \Module
 
                 if($arrLocationsIds !== null)
                 {
-                    $arrColumns[] = 'id IN (' . implode(',',$arrLocationsIds) . ')';
+                    $arrColumns[] = 'id IN (' . implode(',', $arrLocationsIds) . ')';
                 }
-
                 break;
         }
 
+        $arrLocationsIds = array();
         $objLocations = ProviderModel::findBy($arrColumns, $arrValues, $arrOptions);
+
+        // Adding the parent provider to be able to deliver their contact persons
+        if($objLocations !== null)
+        {
+            while($objLocations->next())
+            {
+                $arrLocationsIds[] = $objLocations->id;
+
+                if($objLocations->parentProvider)
+                {
+                    $arrLocationsIds[] = $objLocations->parentProvider;
+                }
+            }
+        }
 
         // Contact persons
         $arrColumns = array();
@@ -325,12 +337,8 @@ class ModuleContactPersonList extends \Module
         {
             $arrColumns[] = 'pid IN (' . implode(',',$arrLocationsIds) . ')';
         }
-        elseif($intLocationId !== null)
+        else
         {
-            $arrColumns[] = 'pid=?';
-            $arrValues[]  = $intLocationId;
-        }
-        else{
             // ToDo: Überflüssig => published=1
             $arrColumns[] = "pid!=''";
         }
@@ -347,6 +355,7 @@ class ModuleContactPersonList extends \Module
         }
 
         $objContacts = ContactPersonModel::findBy($arrColumns, $arrValues, $arrOptions);
+        $objLocations->reset();
 
         return array($objLocations, $objContacts);
     }
