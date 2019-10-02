@@ -40,7 +40,21 @@ class Locations
 
         if ($arrTag[1] === 'token')
         {
-            return $objPage->location_token;
+            if($objPage->location_token)
+            {
+                return $objPage->location_token;
+            }
+            elseif(!!$objPage->location)
+            {
+                $objLocation = ProviderModel::findById($objPage->location);
+
+                if($objLocation !== null)
+                {
+                    return $objLocation->ort;
+                }
+            }
+
+            return false;
         }
         elseif($arrTag[1] === 'current' && !!$objPage->location)
         {
