@@ -220,8 +220,8 @@ class ModuleContactPersonList extends \Module
         {
             switch ($metaField)
             {
-                case 'foto':
-                    $objTemplate->addImage = $this->addSingleImageToTemplate($objTemplate, $objContact->singleSRC, $this->contactPersonImgSize);
+                case 'singleSRC':
+                    $objTemplate->addImage = $this->addSingleImageToTemplate($objTemplate, $objContact->{$metaField}, $this->contactPersonImgSize);
                     break;
                 default:
                     if($objContact->{$metaField})
