@@ -39,5 +39,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
     }
 
     // Hooks
-    $GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('\\ContaoEstateManager\\Locations\\Locations', 'replaceInsertTags');
+    $GLOBALS['TL_HOOKS']['replaceInsertTags'][]        = array('\\ContaoEstateManager\\Locations\\Locations', 'replaceInsertTags');
+    $GLOBALS['TL_HOOKS']['countItemsRealEstateList'][] = array('\\ContaoEstateManager\\Locations\\Locations', 'countItems');
+    $GLOBALS['TL_HOOKS']['fetchItemsRealEstateList'][] = array('\\ContaoEstateManager\\Locations\\Locations', 'fetchItems');
 }

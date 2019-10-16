@@ -11,6 +11,7 @@
 namespace ContaoEstateManager\Locations;
 
 use ContaoEstateManager\ProviderModel;
+use ContaoEstateManager\RealEstateModel;
 
 class Locations
 {
@@ -238,5 +239,68 @@ class Locations
         }
 
         return $objLocation->{$arrTag[2]};
+    }
+
+    /**
+     * Count properties of assigned provider
+     *
+     * @param $intCount
+     * @param $context
+     */
+    public function countItems(&$intCount, $context)
+    {
+        if($context->listMode !== 'location_dynamic')
+        {
+            return;
+        }
+
+        /** @var \PageModel $objPage */
+        global $objPage;
+
+        $arrColumns = array("tl_real_estate.published=1");
+        $arrValues = array();
+
+        if ($objPage->location)
+        {
+            $arrColumns[] = "tl_real_estate.provider=?";
+            $arrValues[]  = $objPage->location;
+        }
+
+        $intCount = RealEstateModel::countBy($arrColumns, $arrValues);
+    }
+
+    /**
+     * Fetch properties of assigned provider
+     *
+     * @param $objRealEstate
+     * @param $limit
+     * @param $offset
+     * @param $context
+     */
+    public function fetchItems(&$objRealEstate, $limit, $offset, $context)
+    {
+        if($context->listMode !== 'location_dynamic')
+        {
+            return;
+        }
+
+        /** @var \PageModel $objPage */
+        global $objPage;
+
+        $arrColumns = array("tl_real_estate.published=1");
+        $arrValues = array();
+
+        if ($objPage->location)
+        {
+            $arrColumns[] = "tl_real_estate.provider=?";
+            $arrValues[]  = $objPage->location;
+        }
+
+        $arrOptions = array(
+            'limit' => $limit,
+            'offset' => $offset
+        );
+
+        $objRealEstate = RealEstateModel::findBy($arrColumns, $arrValues, $arrOptions);
     }
 }
