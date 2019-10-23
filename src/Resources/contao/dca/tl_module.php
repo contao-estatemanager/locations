@@ -127,6 +127,9 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         },
         'sql'                     => "varchar(64) NOT NULL default ''"
     );
+
+    // Extend listMode options
+    $GLOBALS['TL_DCA']['tl_module']['fields']['listMode']['options'][] = 'location_dynamic';
 }
 /**
  * Provide miscellaneous methods that are used by the data configuration array.
