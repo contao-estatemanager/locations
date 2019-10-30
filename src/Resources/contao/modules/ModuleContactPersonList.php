@@ -333,7 +333,7 @@ class ModuleContactPersonList extends \Module
         $arrValues  = array();
         $arrOptions = array('order'=>'department ASC');
 
-        if($arrLocationsIds !== null)
+        if(count($arrLocationsIds))
         {
             $arrColumns[] = 'pid IN (' . implode(',',$arrLocationsIds) . ')';
         }
