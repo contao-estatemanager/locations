@@ -260,11 +260,25 @@ class Locations
         $arrColumns = array("tl_real_estate.published=1");
         $arrValues = array();
 
-        if ($objPage->location)
+        if (!$objPage->location)
         {
-            $arrColumns[] = "tl_real_estate.provider=?";
-            $arrValues[]  = $objPage->location;
+            return;
         }
+
+        $objProvider = ProviderModel::findByPk($objPage->location);
+
+        if ($objProvider === null)
+        {
+            return;
+        }
+
+        if ($objProvider->parentProvider)
+        {
+            $objProvider = ProviderModel::findByPk($objProvider->parentProvider);
+        }
+
+        $arrColumns[] = "tl_real_estate.anbieternr=?";
+        $arrValues[]  = $objProvider->anbieternr;
 
         $intCount = RealEstateModel::countBy($arrColumns, $arrValues);
     }
@@ -290,11 +304,25 @@ class Locations
         $arrColumns = array("tl_real_estate.published=1");
         $arrValues = array();
 
-        if ($objPage->location)
+        if (!$objPage->location)
         {
-            $arrColumns[] = "tl_real_estate.provider=?";
-            $arrValues[]  = $objPage->location;
+            return;
         }
+
+        $objProvider = ProviderModel::findByPk($objPage->location);
+
+        if ($objProvider === null)
+        {
+            return;
+        }
+
+        if ($objProvider->parentProvider)
+        {
+            $objProvider = ProviderModel::findByPk($objProvider->parentProvider);
+        }
+
+        $arrColumns[] = "tl_real_estate.anbieternr=?";
+        $arrValues[]  = $objProvider->anbieternr;
 
         $arrOptions = array(
             'limit' => $limit,
