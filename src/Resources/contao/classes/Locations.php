@@ -249,6 +249,7 @@ class Locations
      */
     public function countItems(&$intCount, $context)
     {
+        // ToDo: Performance optimieren
         if($context->listMode !== 'location_dynamic')
         {
             return;
@@ -302,6 +303,7 @@ class Locations
      */
     public function fetchItems(&$objRealEstate, $limit, $offset, $context)
     {
+        // ToDo: Performance optimieren
         if($context->listMode !== 'location_dynamic')
         {
             return;
