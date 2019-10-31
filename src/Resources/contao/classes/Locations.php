@@ -272,6 +272,15 @@ class Locations
             return;
         }
 
+        $objPageDetails = $objPage->loadDetails();
+        $objRootPage = \PageModel::findByPk($objPageDetails->rootId);
+
+        if ($objRootPage->realEstateQueryLanguage)
+        {
+            $arrColumns[] = "tl_real_estate.sprache=?";
+            $arrValues[]  = $objRootPage->realEstateQueryLanguage;
+        }
+
         if ($objProvider->parentProvider)
         {
             $objProvider = ProviderModel::findByPk($objProvider->parentProvider);
@@ -314,6 +323,15 @@ class Locations
         if ($objProvider === null)
         {
             return;
+        }
+
+        $objPageDetails = $objPage->loadDetails();
+        $objRootPage = \PageModel::findByPk($objPageDetails->rootId);
+
+        if ($objRootPage->realEstateQueryLanguage)
+        {
+            $arrColumns[] = "tl_real_estate.sprache=?";
+            $arrValues[]  = $objRootPage->realEstateQueryLanguage;
         }
 
         if ($objProvider->parentProvider)
