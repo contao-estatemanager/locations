@@ -21,7 +21,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         'inputType'               => 'select',
         'options_callback'        => array('tl_page_locations' ,'getLocations'),
         'reference'               => &$GLOBALS['TL_LANG']['tl_page'],
-        'eval'                    => array('includeBlankOption'=>true,'tl_class'=>'w50'),
+        'eval'                    => array('includeBlankOption'=>true, 'chosen'=>true, 'tl_class'=>'w50'),
         'sql'                     => "varchar(6) NOT NULL default ''",
     );
 

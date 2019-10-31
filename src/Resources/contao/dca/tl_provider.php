@@ -24,7 +24,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         'exclude'                 => true,
         'inputType'               => 'select',
         'options_callback'        => array('tl_provider_locations', 'getProvider'),
-        'eval'                    => array('includeBlankOption'=>true,'tl_class'=>'w50'),
+        'eval'                    => array('includeBlankOption'=>true, 'chosen'=>true ,'tl_class'=>'w50'),
         'sql'                     => "varchar(255) NOT NULL default ''"
     );
 
