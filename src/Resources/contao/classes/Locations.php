@@ -249,6 +249,7 @@ class Locations
      */
     public function countItems(&$intCount, $context)
     {
+        // ToDo: Performance optimieren
         if($context->listMode !== 'location_dynamic')
         {
             return;
@@ -260,11 +261,34 @@ class Locations
         $arrColumns = array("tl_real_estate.published=1");
         $arrValues = array();
 
-        if ($objPage->location)
+        if (!$objPage->location)
         {
-            $arrColumns[] = "tl_real_estate.provider=?";
-            $arrValues[]  = $objPage->location;
+            return;
         }
+
+        $objProvider = ProviderModel::findByPk($objPage->location);
+
+        if ($objProvider === null)
+        {
+            return;
+        }
+
+        $objPageDetails = $objPage->loadDetails();
+        $objRootPage = \PageModel::findByPk($objPageDetails->rootId);
+
+        if ($objRootPage->realEstateQueryLanguage)
+        {
+            $arrColumns[] = "tl_real_estate.sprache=?";
+            $arrValues[]  = $objRootPage->realEstateQueryLanguage;
+        }
+
+        if ($objProvider->parentProvider)
+        {
+            $objProvider = ProviderModel::findByPk($objProvider->parentProvider);
+        }
+
+        $arrColumns[] = "tl_real_estate.anbieternr=?";
+        $arrValues[]  = $objProvider->anbieternr;
 
         $intCount = RealEstateModel::countBy($arrColumns, $arrValues);
     }
@@ -279,6 +303,7 @@ class Locations
      */
     public function fetchItems(&$objRealEstate, $limit, $offset, $context)
     {
+        // ToDo: Performance optimieren
         if($context->listMode !== 'location_dynamic')
         {
             return;
@@ -290,11 +315,34 @@ class Locations
         $arrColumns = array("tl_real_estate.published=1");
         $arrValues = array();
 
-        if ($objPage->location)
+        if (!$objPage->location)
         {
-            $arrColumns[] = "tl_real_estate.provider=?";
-            $arrValues[]  = $objPage->location;
+            return;
         }
+
+        $objProvider = ProviderModel::findByPk($objPage->location);
+
+        if ($objProvider === null)
+        {
+            return;
+        }
+
+        $objPageDetails = $objPage->loadDetails();
+        $objRootPage = \PageModel::findByPk($objPageDetails->rootId);
+
+        if ($objRootPage->realEstateQueryLanguage)
+        {
+            $arrColumns[] = "tl_real_estate.sprache=?";
+            $arrValues[]  = $objRootPage->realEstateQueryLanguage;
+        }
+
+        if ($objProvider->parentProvider)
+        {
+            $objProvider = ProviderModel::findByPk($objProvider->parentProvider);
+        }
+
+        $arrColumns[] = "tl_real_estate.anbieternr=?";
+        $arrValues[]  = $objProvider->anbieternr;
 
         $arrOptions = array(
             'limit' => $limit,
