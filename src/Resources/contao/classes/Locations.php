@@ -10,6 +10,7 @@
 
 namespace ContaoEstateManager\Locations;
 
+use ContaoEstateManager\FilterSession;
 use ContaoEstateManager\ProviderModel;
 use ContaoEstateManager\RealEstateModel;
 
@@ -255,11 +256,12 @@ class Locations
             return;
         }
 
+        $objFilterSession = FilterSession::getInstance();
+
+        list($arrColumns, $arrValues, $arrOptions) = $objFilterSession->getTypeParameterByGroups($context->realEstateGroups, $context->filterMode, false, $context);
+
         /** @var \PageModel $objPage */
         global $objPage;
-
-        $arrColumns = array("tl_real_estate.published=1");
-        $arrValues = array();
 
         if (!$objPage->location)
         {
@@ -271,15 +273,6 @@ class Locations
         if ($objProvider === null)
         {
             return;
-        }
-
-        $objPageDetails = $objPage->loadDetails();
-        $objRootPage = \PageModel::findByPk($objPageDetails->rootId);
-
-        if ($objRootPage->realEstateQueryLanguage)
-        {
-            $arrColumns[] = "tl_real_estate.sprache=?";
-            $arrValues[]  = $objRootPage->realEstateQueryLanguage;
         }
 
         if ($objProvider->parentProvider)
@@ -309,11 +302,15 @@ class Locations
             return;
         }
 
+        $objFilterSession = FilterSession::getInstance();
+
+        list($arrColumns, $arrValues, $arrOptions) = $objFilterSession->getTypeParameterByGroups($context->realEstateGroups, $context->filterMode, false, $context);
+
+        $arrOptions['limit'] = $limit;
+        $arrOptions['offset'] = $offset;
+
         /** @var \PageModel $objPage */
         global $objPage;
-
-        $arrColumns = array("tl_real_estate.published=1");
-        $arrValues = array();
 
         if (!$objPage->location)
         {
@@ -327,15 +324,6 @@ class Locations
             return;
         }
 
-        $objPageDetails = $objPage->loadDetails();
-        $objRootPage = \PageModel::findByPk($objPageDetails->rootId);
-
-        if ($objRootPage->realEstateQueryLanguage)
-        {
-            $arrColumns[] = "tl_real_estate.sprache=?";
-            $arrValues[]  = $objRootPage->realEstateQueryLanguage;
-        }
-
         if ($objProvider->parentProvider)
         {
             $objProvider = ProviderModel::findByPk($objProvider->parentProvider);
@@ -343,11 +331,6 @@ class Locations
 
         $arrColumns[] = "tl_real_estate.anbieternr=?";
         $arrValues[]  = $objProvider->anbieternr;
-
-        $arrOptions = array(
-            'limit' => $limit,
-            'offset' => $offset
-        );
 
         $objRealEstate = RealEstateModel::findBy($arrColumns, $arrValues, $arrOptions);
     }
