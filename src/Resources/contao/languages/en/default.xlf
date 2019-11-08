@@ -1,51 +1,40 @@
 <?xml version="1.0" ?>
 <xliff version="1.1">
-  <file datatype="php" original="src/Resources/contao/languages/en/default.php" source-language="en" target-language="de">
+  <file datatype="php" original="src/Resources/contao/languages/en/default.php" source-language="en">
     <body>
       <trans-unit id="MSC.location_contact_person">
         <source>Contact persons</source>
-        <target>Kontaktpersonen</target>
       </trans-unit>
       <trans-unit id="MSC.location_location">
         <source>Locations</source>
-        <target>Standorte</target>
       </trans-unit>
       <trans-unit id="MSC.location_department">
         <source>Departments</source>
-        <target>Abteilungen</target>
       </trans-unit>
 
       <trans-unit id="MSC.location_page.0">
         <source>Page</source>
-        <target>Seite</target>
       </trans-unit>
       <trans-unit id="MSC.location_page.1">
         <source>Uses the location stored in the page tree.</source>
-        <target>Verwendet den im Seitenbaum hinterlegten Standort.</target>
       </trans-unit>
       <trans-unit id="MSC.location_custom.0">
         <source>Own selection</source>
-        <target>Eigene Auswahl</target>
       </trans-unit>
       <trans-unit id="MSC.location_custom.1">
         <source>Only displays locations that have been selected in the module.</source>
-        <target>Gibt nur Standorte aus, die im Modul ausgewählt wurden.</target>
       </trans-unit>
       <trans-unit id="MSC.location_all.0">
         <source>All</source>
-        <target>Alle</target>
       </trans-unit>
       <trans-unit id="MSC.location_all.1">
         <source>Outputs all locations.</source>
-        <target>Gibt alle Standorte aus.</target>
       </trans-unit>
       <trans-unit id="MSC.emptyContactPersonList">
         <source>Currently there are no contact persons listed.</source>
-        <target>Zurzeit sind keine Kontaktpersonen vorhanden.</target>
       </trans-unit>
       <trans-unit id="MSC.emptyLocationList">
         <source>Currently there are no locations listed.</source>
-        <target>Zurzeit sind keine Standorte vorhanden.</target>
       </trans-unit>
     </body>
   </file>
