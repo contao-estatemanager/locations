@@ -19,6 +19,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
     // Subpalettes
     $GLOBALS['TL_DCA']['tl_module']['subpalettes']['locationMode_location_custom'] = 'locations';
     $GLOBALS['TL_DCA']['tl_module']['subpalettes']['useSpecificDepartments'] = 'departments';
+    $GLOBALS['TL_DCA']['tl_module']['subpalettes']['listMode_location_dynamic'] = 'realEstateGroups,filterMode';
 
     // Fields
     $GLOBALS['TL_DCA']['tl_module']['fields']['locationMode'] = array
