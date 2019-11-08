@@ -58,6 +58,11 @@ class tl_contact_person_department extends Backend
         $arrDepartments = array();
         $objDepartments = ContaoEstateManager\Locations\DepartmentModel::findAll();
 
+        if($objDepartments === null)
+        {
+            return $arrDepartments;
+        }
+
         while ($objDepartments->next())
         {
             $arrDepartments[ $objDepartments->id ] = $objDepartments->title;
