@@ -329,7 +329,7 @@ class ModuleContactPersonList extends \Module
         }
 
         // Contact persons
-        $arrColumns = array();
+        $arrColumns = array('published=1');
         $arrValues  = array();
         $arrOptions = array('order'=>'department ASC');
 
