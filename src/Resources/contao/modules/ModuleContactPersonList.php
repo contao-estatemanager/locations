@@ -221,7 +221,26 @@ class ModuleContactPersonList extends \Module
             switch ($metaField)
             {
                 case 'singleSRC':
-                    $objTemplate->addImage = $this->addSingleImageToTemplate($objTemplate, $objContact->{$metaField}, $this->contactPersonImgSize);
+                    $varSingleSrc = $objContact->{$metaField};
+
+                    if(!$varSingleSrc)
+                    {
+                        switch(strtolower($objContact->anrede))
+                        {
+                            case 'frau':
+                                $varSingleSrc = \Config::get('defaultContactPersonFemaleImage');
+                                break;
+                            case 'herr':
+                                $varSingleSrc = \Config::get('defaultContactPersonMaleImage');
+                                break;
+                        }
+
+                        if(!$varSingleSrc){
+                            $varSingleSrc = \Config::get('defaultContactPersonImage');
+                        }
+                    }
+
+                    $objTemplate->addImage = $this->addSingleImageToTemplate($objTemplate, $varSingleSrc, $this->contactPersonImgSize);
                     break;
                 default:
                     if($objContact->{$metaField})
@@ -245,11 +264,6 @@ class ModuleContactPersonList extends \Module
      */
     protected function addSingleImageToTemplate(&$objTemplate, $varSingleSrc, $imgSize)
     {
-        if (!$varSingleSrc)
-        {
-            $varSingleSrc =\Config::get('defaultContactPersonImage');
-        }
-
         if($varSingleSrc)
         {
             if (!($varSingleSrc instanceof \FilesModel) && \Validator::isUuid($varSingleSrc))

@@ -154,11 +154,6 @@ class ModuleLocationList extends \Module
      */
     protected function addSingleImageToTemplate(&$objTemplate, $varSingleSrc, $imgSize)
     {
-        if (!$varSingleSrc)
-        {
-            $varSingleSrc =\Config::get('defaultContactPersonImage');
-        }
-
         if ($varSingleSrc)
         {
             if (!($varSingleSrc instanceof \FilesModel) && \Validator::isUuid($varSingleSrc))
