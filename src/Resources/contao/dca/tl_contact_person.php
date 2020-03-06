@@ -32,8 +32,6 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
  *
  * @author Daniele Sciannimanica <daniele@oveleon.de>
  */
-use ContaoEstateManager\Locations\DepartmentModel;
-
 class tl_contact_person_department extends Backend
 {
 
