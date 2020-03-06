@@ -1,46 +1,36 @@
 <?xml version="1.0" ?>
 <xliff version="1.1">
-  <file datatype="php" original="src/Resources/contao/languages/en/tl_provider.php" source-language="en" target-language="de">
+  <file datatype="php" original="src/Resources/contao/languages/en/tl_provider.php" source-language="en">
     <body>
       <trans-unit id="tl_provider.parentProvider.0">
         <source>Parent Provider</source>
-        <target>Übergeordneter Anbieter</target>
       </trans-unit>
       <trans-unit id="tl_provider.parentProvider.1">
         <source>Here you can specify a parent provider.</source>
-        <target>Hier können Sie einen übergeordneten Anbieter angeben.</target>
       </trans-unit>
       <trans-unit id="tl_provider.beschreibung_standort.0">
         <source>Location Description</source>
-        <target>Standort Beschreibung</target>
       </trans-unit>
       <trans-unit id="tl_provider.beschreibung_standort.1">
         <source>Here you can describe your location.</source>
-        <target>Hier können Sie Ihren Standort beschreiben.</target>
       </trans-unit>
       <trans-unit id="tl_provider.locationSingleSRC.0">
         <source>Location image</source>
-        <target>Standort Foto</target>
       </trans-unit>
       <trans-unit id="tl_provider.locationSingleSRC.1">
         <source>Here you can choose an image of the office.</source>
-        <target>Hier können Sie ein Foto des Büros wählen.</target>
       </trans-unit>
       <trans-unit id="tl_provider.teamSingleSRC.0">
         <source>Team picture</source>
-        <target>Team Foto</target>
       </trans-unit>
       <trans-unit id="tl_provider.teamSingleSRC.1">
         <source>Here you can choose a picture of the team.</source>
-        <target>Hier können Sie ein Foto des Teams wählen.</target>
       </trans-unit>
       <trans-unit id="tl_provider.panoramaSingleSRC.0">
         <source>Panorama picture</source>
-        <target>Panorama Foto</target>
       </trans-unit>
       <trans-unit id="tl_provider.panoramaSingleSRC.1">
         <source>Here you can choose a panorama picture.</source>
-        <target>Hier können Sie ein Panorama-Foto wählen.</target>
       </trans-unit>
     </body>
   </file>
