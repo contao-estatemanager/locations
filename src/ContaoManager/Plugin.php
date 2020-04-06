@@ -17,6 +17,7 @@ use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use ContaoEstateManager\Locations\EstateManagerLocations;
+use ContaoEstateManager\EstateManager\EstateManager;
 
 class Plugin implements BundlePluginInterface
 {
@@ -27,7 +28,7 @@ class Plugin implements BundlePluginInterface
     {
         return [
             BundleConfig::create(EstateManagerLocations::class)
-                ->setLoadAfter([ContaoCoreBundle::class])
+                ->setLoadAfter([ContaoCoreBundle::class, EstateManager::class])
                 ->setReplace(['estatemanagerlocations']),
         ];
     }
