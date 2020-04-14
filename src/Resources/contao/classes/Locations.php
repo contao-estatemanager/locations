@@ -290,11 +290,10 @@ class Locations
      * Fetch properties of assigned provider
      *
      * @param $objRealEstate
-     * @param $limit
-     * @param $offset
+     * @param $arrOptions
      * @param $context
      */
-    public function fetchItems(&$objRealEstate, $limit, $offset, $context)
+    public function fetchItems(&$objRealEstate, $arrOptions, $context)
     {
         // ToDo: Performance optimieren
         if($context->listMode !== 'location_dynamic')
@@ -304,10 +303,9 @@ class Locations
 
         $objFilterSession = FilterSession::getInstance();
 
-        list($arrColumns, $arrValues, $arrOptions) = $objFilterSession->getTypeParameterByGroups($context->realEstateGroups, $context->filterMode, false, $context);
+        list($arrColumns, $arrValues, $options) = $objFilterSession->getTypeParameterByGroups($context->realEstateGroups, $context->filterMode, false, $context);
 
-        $arrOptions['limit'] = $limit;
-        $arrOptions['offset'] = $offset;
+        $arrOptions = array_merge($options, $arrOptions);
 
         /** @var \PageModel $objPage */
         global $objPage;
