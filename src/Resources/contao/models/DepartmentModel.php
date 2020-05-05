@@ -10,6 +10,8 @@
 
 namespace ContaoEstateManager\Locations;
 
+use Contao\Model;
+
 /**
  * Reads and writes departments
  *
@@ -29,7 +31,7 @@ namespace ContaoEstateManager\Locations;
  * @author Daniele Sciannimanica <daniele@oveleon.de>
  */
 
-class DepartmentModel extends \Model
+class DepartmentModel extends Model
 {
 
     /**

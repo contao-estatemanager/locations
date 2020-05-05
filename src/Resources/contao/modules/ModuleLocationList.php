@@ -10,6 +10,12 @@
 
 namespace ContaoEstateManager\Locations;
 
+use Contao\BackendTemplate;
+use Contao\FilesModel;
+use Contao\FrontendTemplate;
+use Contao\Module;
+use Contao\StringUtil;
+use Contao\Validator;
 use Patchwork\Utf8;
 use ContaoEstateManager\ContactPersonModel;
 use ContaoEstateManager\ProviderModel;
@@ -19,7 +25,7 @@ use ContaoEstateManager\ProviderModel;
  *
  * @author Daniele Sciannimanica <daniele@oveleon.de>
  */
-class ModuleLocationList extends \Module
+class ModuleLocationList extends Module
 {
     /**
      * Template
@@ -37,7 +43,7 @@ class ModuleLocationList extends \Module
         if (TL_MODE == 'BE')
         {
             /** @var BackendTemplate|object $objTemplate */
-            $objTemplate = new \BackendTemplate('be_wildcard');
+            $objTemplate = new BackendTemplate('be_wildcard');
 
             $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['locationlist'][0]) . ' ###';
             $objTemplate->title = $this->headline;
@@ -111,7 +117,7 @@ class ModuleLocationList extends \Module
     protected function parseLocation($objLocation, $strClass='', $intCount=0)
     {
         /** @var FrontendTemplate|object $objTemplate */
-        $objTemplate = new \FrontendTemplate($this->locationTemplate);
+        $objTemplate = new FrontendTemplate($this->locationTemplate);
 
         if ($objLocation->cssClass != '')
         {
@@ -123,7 +129,7 @@ class ModuleLocationList extends \Module
         $objTemplate->showLocationInformation = true;
         $objTemplate->contacts = array();
 
-        $arrMetaFields = \StringUtil::deserialize($this->locationMetaFields, true);
+        $arrMetaFields = StringUtil::deserialize($this->locationMetaFields, true);
 
         foreach ($arrMetaFields as $metaField)
         {
@@ -156,9 +162,9 @@ class ModuleLocationList extends \Module
     {
         if ($varSingleSrc)
         {
-            if (!($varSingleSrc instanceof \FilesModel) && \Validator::isUuid($varSingleSrc))
+            if (!($varSingleSrc instanceof FilesModel) && Validator::isUuid($varSingleSrc))
             {
-                $objModel = \FilesModel::findByUuid($varSingleSrc);
+                $objModel = FilesModel::findByUuid($varSingleSrc);
             }
             else
             {
@@ -189,7 +195,7 @@ class ModuleLocationList extends \Module
     /**
      * Fetch the matching items
      *
-     * @return array
+     * @return \Contao\Model\Collection|ProviderModel|null
      */
     protected function fetchItems()
     {
@@ -215,7 +221,7 @@ class ModuleLocationList extends \Module
 
                 break;
             case 'location_custom':
-                $arrLocationsIds = \StringUtil::deserialize($this->locations);
+                $arrLocationsIds = StringUtil::deserialize($this->locations);
 
                 if($arrLocationsIds !== null)
                 {
