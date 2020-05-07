@@ -253,7 +253,7 @@ class Locations
      * @param $intCount
      * @param $context
      */
-    public function countItems(&$intCount, $context)
+    public function countItems(&$intCount, $context): void
     {
         // ToDo: Performance optimieren
         if($context->listMode !== 'location_dynamic')
@@ -298,7 +298,7 @@ class Locations
      * @param $arrOptions
      * @param $context
      */
-    public function fetchItems(&$objRealEstate, $arrOptions, $context)
+    public function fetchItems(&$objRealEstate, $arrOptions, $context): void
     {
         // ToDo: Performance optimieren
         if($context->listMode !== 'location_dynamic')

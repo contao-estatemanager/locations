@@ -82,7 +82,7 @@ class ModuleLocationList extends Module
      *
      * @return array
      */
-    protected function parseLocations($objLocations)
+    protected function parseLocations($objLocations): array
     {
         $limit = $objLocations->count();
 
@@ -114,7 +114,7 @@ class ModuleLocationList extends Module
      *
      * @return string
      */
-    protected function parseLocation($objLocation, $strClass='', $intCount=0)
+    protected function parseLocation($objLocation, $strClass='', $intCount=0): string
     {
         /** @var FrontendTemplate|object $objTemplate */
         $objTemplate = new FrontendTemplate($this->locationTemplate);
@@ -156,9 +156,9 @@ class ModuleLocationList extends Module
      * @param $varSingleSrc
      * @param $imgSize
      *
-     * @return boolean
+     * @return bool
      */
-    protected function addSingleImageToTemplate(&$objTemplate, $varSingleSrc, $imgSize)
+    protected function addSingleImageToTemplate(&$objTemplate, $varSingleSrc, $imgSize): bool
     {
         if ($varSingleSrc)
         {
@@ -231,8 +231,6 @@ class ModuleLocationList extends Module
                 break;
         }
 
-        $objLocations = ProviderModel::findBy($arrColumns, $arrValues, $arrOptions);
-
-        return $objLocations;
+        return ProviderModel::findBy($arrColumns, $arrValues, $arrOptions);
     }
 }

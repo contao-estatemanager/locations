@@ -79,7 +79,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         'inputType'               => 'checkbox',
         'options'                 => array('firma', 'postleitzahl', 'ort', 'strasse', 'hausnummer', 'bundesland', 'land', 'telefon', 'telefon2', 'fax', 'email', 'beschreibung', 'beschreibung_standort', 'singleSRC'),
         'eval'                    => array('multiple'=>true),
-        'sql'                     => "varchar(255) NOT NULL default ''"
+        'sql'                     => "blob NULL",
     );
 
     $GLOBALS['TL_DCA']['tl_module']['fields']['contactPersonMetaFields'] = array
@@ -90,7 +90,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         'inputType'               => 'checkbox',
         'options'                 => array('firma', 'anrede', 'vorname', 'name', 'titel', 'position', 'email_zentrale', 'email_direkt', 'email_privat', 'email_sonstige', 'email_feedback', 'tel_zentrale', 'tel_durchw', 'tel_fax', 'tel_handy', 'tel_privat', 'tel_sonstige', 'strasse', 'hausnummer', 'plz', 'ort', 'land', 'singleSRC'),
         'eval'                    => array('multiple'=>true),
-        'sql'                     => "varchar(255) NOT NULL default ''"
+        'sql'                     => "blob NULL",
     );
 
     $GLOBALS['TL_DCA']['tl_module']['fields']['locationTemplate'] = array
@@ -99,7 +99,9 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         'default'                 => 'location_default',
         'exclude'                 => true,
         'inputType'               => 'select',
-        'options_callback'        => array('tl_module_locations', 'getLocationTemplates'),
+        'options_callback'        => function (){
+            return Contao\Controller::getTemplateGroup('location_');
+        },
         'eval'                    => array('tl_class'=>'w50'),
         'sql'                     => "varchar(64) NOT NULL default ''"
     );
@@ -110,7 +112,9 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         'default'                 => 'location_default',
         'exclude'                 => true,
         'inputType'               => 'select',
-        'options_callback'        => array('tl_module_locations', 'geContactPersonTemplates'),
+        'options_callback'        => function (){
+            return Contao\Controller::getTemplateGroup('contact_person_');
+        },
         'eval'                    => array('tl_class'=>'w50'),
         'sql'                     => "varchar(64) NOT NULL default ''"
     );
@@ -140,26 +144,6 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
 
 class tl_module_locations extends Backend
 {
-    /**
-     * Return all location templates as array
-     *
-     * @return array
-     */
-    public function getLocationTemplates()
-    {
-        return $this->getTemplateGroup('location_');
-    }
-
-    /**
-     * Return all location templates as array
-     *
-     * @return array
-     */
-    public function geContactPersonTemplates()
-    {
-        return $this->getTemplateGroup('contact_person_');
-    }
-
     /**
      * Get all locations and return them as array
      *

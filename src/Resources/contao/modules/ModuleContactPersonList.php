@@ -99,7 +99,7 @@ class ModuleContactPersonList extends Module
      *
      * @return array
      */
-    protected function parseLocations($objLocations)
+    protected function parseLocations($objLocations): array
     {
         $limit = $objLocations->count();
 
@@ -131,7 +131,7 @@ class ModuleContactPersonList extends Module
      *
      * @return string
      */
-    protected function parseLocation($objLocation, $strClass='', $intCount=0)
+    protected function parseLocation($objLocation, $strClass='', $intCount=0): string
     {
         /** @var FrontendTemplate|object $objTemplate */
         $objTemplate = new FrontendTemplate($this->locationTemplate);
@@ -180,7 +180,7 @@ class ModuleContactPersonList extends Module
      *
      * @return array
      */
-    protected function parseContactPersons($arrContactPerons)
+    protected function parseContactPersons($arrContactPerons): array
     {
         $limit = count($arrContactPerons);
 
@@ -208,9 +208,9 @@ class ModuleContactPersonList extends Module
      *
      * @return string
      */
-    protected function parseContactPerson($objContact, $strClass='', $intCount=0)
+    protected function parseContactPerson($objContact, $strClass='', $intCount=0): string
     {
-        /** @var FrontendTemplate|object $objTemplate */
+        /** @var FrontendTemplate $objTemplate */
         $objTemplate = new FrontendTemplate($this->contactPersonTemplate);
 
         if ($objContact->cssClass != '')
@@ -267,9 +267,9 @@ class ModuleContactPersonList extends Module
      * @param $varSingleSrc
      * @param $imgSize
      *
-     * @return boolean
+     * @return bool
      */
-    protected function addSingleImageToTemplate(&$objTemplate, $varSingleSrc, $imgSize)
+    protected function addSingleImageToTemplate(&$objTemplate, $varSingleSrc, $imgSize): bool
     {
         if($varSingleSrc)
         {
@@ -308,7 +308,7 @@ class ModuleContactPersonList extends Module
      *
      * @return array
      */
-    protected function fetchItems()
+    protected function fetchItems(): array
     {
         $arrColumns = array('published=1');
         $arrValues  = array();
