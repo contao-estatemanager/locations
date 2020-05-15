@@ -121,7 +121,7 @@ $GLOBALS['TL_DCA']['tl_department'] = array
  *
  * @author Daniele Sciannimanica <daniele@oveleon.de>
  */
-class tl_department extends Backend
+class tl_department extends Contao\Backend
 {
 
     /**
@@ -130,7 +130,7 @@ class tl_department extends Backend
     public function __construct()
     {
         parent::__construct();
-        $this->import('BackendUser', 'User');
+        $this->import('Contao\BackendUser', 'User');
     }
 
     /**
@@ -138,11 +138,27 @@ class tl_department extends Backend
      *
      * @throws Contao\CoreBundle\Exception\AccessDeniedException
      */
-    public function checkPermission()
+    public function checkPermission(): void
     {
-        return;
-    }
+        if ($this->User->isAdmin)
+        {
+            return;
+        }
 
+        // Check permissions to add provider
+        if (!$this->User->hasAccess('create', 'departmentp'))
+        {
+            $GLOBALS['TL_DCA']['tl_department']['config']['closed'] = true;
+            $GLOBALS['TL_DCA']['tl_department']['config']['notCreatable'] = true;
+            $GLOBALS['TL_DCA']['tl_department']['config']['notCopyable'] = true;
+        }
+
+        // Check permissions to delete providers
+        if (!$this->User->hasAccess('delete', 'departmentp'))
+        {
+            $GLOBALS['TL_DCA']['tl_department']['config']['notDeletable'] = true;
+        }
+    }
 
     /**
      * Return the edit header button
@@ -156,9 +172,9 @@ class tl_department extends Backend
      *
      * @return string
      */
-    public function editDepartment($row, $href, $label, $title, $icon, $attributes)
+    public function editDepartment(array $row, string $href, string $label, string $title, string $icon, string $attributes): string
     {
-        return $this->User->canEditFieldsOf('tl_department') ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.StringUtil::specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.svg$/i', '_.svg', $icon)).' ';
+        return $this->User->canEditFieldsOf('tl_department') ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.Contao\StringUtil::specialchars($title).'"'.$attributes.'>'.Contao\Image::getHtml($icon, $label).'</a> ' : Contao\Image::getHtml(preg_replace('/\.svg$/i', '_.svg', $icon)).' ';
     }
 
     /**
@@ -173,9 +189,9 @@ class tl_department extends Backend
      *
      * @return string
      */
-    public function copyDepartment($row, $href, $label, $title, $icon, $attributes)
+    public function copyDepartment(array $row, string $href, string $label, string $title, string $icon, string $attributes): string
     {
-        return $this->User->hasAccess('create', 'department') ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.StringUtil::specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.svg$/i', '_.svg', $icon)).' ';
+        return $this->User->hasAccess('create', 'departmentp') ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.Contao\StringUtil::specialchars($title).'"'.$attributes.'>'.Contao\Image::getHtml($icon, $label).'</a> ' : Contao\Image::getHtml(preg_replace('/\.svg$/i', '_.svg', $icon)).' ';
     }
 
     /**
@@ -190,8 +206,8 @@ class tl_department extends Backend
      *
      * @return string
      */
-    public function deleteDepartment($row, $href, $label, $title, $icon, $attributes)
+    public function deleteDepartment(array $row, string $href, string $label, string $title, string $icon, string $attributes): string
     {
-        return $this->User->hasAccess('delete', 'department') ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.StringUtil::specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.svg$/i', '_.svg', $icon)).' ';
+        return $this->User->hasAccess('delete', 'departmentp') ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.Contao\StringUtil::specialchars($title).'"'.$attributes.'>'.Contao\Image::getHtml($icon, $label).'</a> ' : Contao\Image::getHtml(preg_replace('/\.svg$/i', '_.svg', $icon)).' ';
     }
 }

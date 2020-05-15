@@ -202,9 +202,9 @@ class ModuleContactPersonList extends Module
     /**
      * Parse an item and return it as string
      *
-     * @param ProviderModel $objContact
-     * @param string        $strClass
-     * @param integer       $intCount
+     * @param ContactPersonModel $objContact
+     * @param string             $strClass
+     * @param integer            $intCount
      *
      * @return string
      */

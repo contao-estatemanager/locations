@@ -79,7 +79,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         'inputType'               => 'checkbox',
         'options'                 => array('firma', 'postleitzahl', 'ort', 'strasse', 'hausnummer', 'bundesland', 'land', 'telefon', 'telefon2', 'fax', 'email', 'beschreibung', 'beschreibung_standort', 'singleSRC'),
         'eval'                    => array('multiple'=>true),
-        'sql'                     => "blob NULL",
+        'sql'                     => "varchar(255) NOT NULL default ''"
     );
 
     $GLOBALS['TL_DCA']['tl_module']['fields']['contactPersonMetaFields'] = array
@@ -90,7 +90,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         'inputType'               => 'checkbox',
         'options'                 => array('firma', 'anrede', 'vorname', 'name', 'titel', 'position', 'email_zentrale', 'email_direkt', 'email_privat', 'email_sonstige', 'email_feedback', 'tel_zentrale', 'tel_durchw', 'tel_fax', 'tel_handy', 'tel_privat', 'tel_sonstige', 'strasse', 'hausnummer', 'plz', 'ort', 'land', 'singleSRC'),
         'eval'                    => array('multiple'=>true),
-        'sql'                     => "blob NULL",
+        'sql'                     => "varchar(255) NOT NULL default ''"
     );
 
     $GLOBALS['TL_DCA']['tl_module']['fields']['locationTemplate'] = array
@@ -99,9 +99,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         'default'                 => 'location_default',
         'exclude'                 => true,
         'inputType'               => 'select',
-        'options_callback'        => function (){
-            return Contao\Controller::getTemplateGroup('location_');
-        },
+        'options_callback'        => array('tl_module_locations', 'getLocationTemplates'),
         'eval'                    => array('tl_class'=>'w50'),
         'sql'                     => "varchar(64) NOT NULL default ''"
     );
@@ -112,9 +110,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         'default'                 => 'location_default',
         'exclude'                 => true,
         'inputType'               => 'select',
-        'options_callback'        => function (){
-            return Contao\Controller::getTemplateGroup('contact_person_');
-        },
+        'options_callback'        => array('tl_module_locations', 'geContactPersonTemplates'),
         'eval'                    => array('tl_class'=>'w50'),
         'sql'                     => "varchar(64) NOT NULL default ''"
     );
@@ -128,7 +124,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         'eval'                    => array('rgxp'=>'natural', 'includeBlankOption'=>true, 'nospace'=>true, 'helpwizard'=>true, 'tl_class'=>'w50'),
         'options_callback' => function ()
         {
-            return System::getContainer()->get('contao.image.image_sizes')->getOptionsForUser(BackendUser::getInstance());
+            return Contao\System::getContainer()->get('contao.image.image_sizes')->getOptionsForUser(Contao\BackendUser::getInstance());
         },
         'sql'                     => "varchar(64) NOT NULL default ''"
     );
@@ -136,20 +132,41 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
     // Extend listMode options
     $GLOBALS['TL_DCA']['tl_module']['fields']['listMode']['options'][] = 'location_dynamic';
 }
+
+
 /**
  * Provide miscellaneous methods that are used by the data configuration array.
  *
  * @author Daniele Sciannimanica <daniele@oveleon.de>
  */
-
-class tl_module_locations extends Backend
+class tl_module_locations extends Contao\Backend
 {
+    /**
+     * Return all location templates as array
+     *
+     * @return array
+     */
+    public function getLocationTemplates()
+    {
+        return $this->getTemplateGroup('location_');
+    }
+
+    /**
+     * Return all location templates as array
+     *
+     * @return array
+     */
+    public function geContactPersonTemplates()
+    {
+        return $this->getTemplateGroup('contact_person_');
+    }
+
     /**
      * Get all locations and return them as array
      *
      * @return array
      */
-    public function getLocations()
+    public function getLocations(): array
     {
         $arrLocations = array();
         $objLocations = ContaoEstateManager\ProviderModel::findAll();
@@ -165,11 +182,11 @@ class tl_module_locations extends Backend
     /**
      * Return all departments as array
      *
-     * @param DataContainer $dc
+     * @param Contao\DataContainer $dc
      *
      * @return array
      */
-    public function getDepartments(DataContainer $dc)
+    public function getDepartments(Contao\DataContainer $dc): array
     {
         $arrDepartments = array();
         $objDepartments = ContaoEstateManager\Locations\DepartmentModel::findAll();

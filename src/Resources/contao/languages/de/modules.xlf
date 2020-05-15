@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="MOD.department.0">
         <source>Departments</source>
-        <target>Abteilungen.</target>
+        <target>Abteilungen</target>
       </trans-unit>
       <trans-unit id="MOD.department.1">
         <source>Manage departments</source>

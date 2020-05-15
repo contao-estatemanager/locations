@@ -22,8 +22,8 @@ use Contao\Model;
  * @method static DepartmentModel|null findOneBy($col, $val, $opt=array())
  * @method static DepartmentModel|null findOneByTitle($col, $val, $opt=array())
  *
- * @method static \Model\Collection|DepartmentModel[]|DepartmentModel|null findMultipleByIds($val, array $opt=array())
- * @method static \Model\Collection|DepartmentModel[]|DepartmentModel|null findByTitle($val, array $opt=array())
+ * @method static Model\Collection|DepartmentModel[]|DepartmentModel|null findMultipleByIds($val, array $opt=array())
+ * @method static Model\Collection|DepartmentModel[]|DepartmentModel|null findByTitle($val, array $opt=array())
  *
  * @method static integer countById($id, array $opt=array())
  * @method static integer countByTitle($id, array $opt=array())
