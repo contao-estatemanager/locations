@@ -69,11 +69,10 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
  *
  * @author Daniele Sciannimanica <daniele@oveleon.de>
  */
-
-class tl_provider_locations extends Backend
+class tl_provider_locations extends Contao\Backend
 {
     /**
-     * Get all locations and return them as array
+     * Get all provider and return them as array
      *
      * @return array
      */

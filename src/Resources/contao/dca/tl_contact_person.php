@@ -32,7 +32,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
  *
  * @author Daniele Sciannimanica <daniele@oveleon.de>
  */
-class tl_contact_person_department extends Backend
+class tl_contact_person_department extends Contao\Backend
 {
 
     /**
@@ -41,17 +41,17 @@ class tl_contact_person_department extends Backend
     public function __construct()
     {
         parent::__construct();
-        $this->import('BackendUser', 'User');
+        $this->import('Contao\BackendUser', 'User');
     }
 
     /**
      * Return all departments as array
      *
-     * @param DataContainer $dc
+     * @param Contao\DataContainer $dc
      *
      * @return array
      */
-    public function getDepartments(DataContainer $dc)
+    public function getDepartments(Contao\DataContainer $dc): array
     {
         $arrDepartments = array();
         $objDepartments = ContaoEstateManager\Locations\DepartmentModel::findAll();

@@ -9,7 +9,7 @@
  */
 
 // ESTATEMANAGER
-$GLOBALS['TL_ESTATEMANAGER_ADDONS'][] = array('ContaoEstateManager\\Locations', 'AddonManager');
+$GLOBALS['TL_ESTATEMANAGER_ADDONS'][] = array('ContaoEstateManager\Locations', 'AddonManager');
 
 if(ContaoEstateManager\Locations\AddonManager::valid()) {
     // Backend modules
@@ -20,11 +20,11 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
     );
 
     // Models
-    $GLOBALS['TL_MODELS']['tl_department'] = '\\ContaoEstateManager\\Locations\\DepartmentModel';
+    $GLOBALS['TL_MODELS']['tl_department'] = 'ContaoEstateManager\Locations\DepartmentModel';
 
     // Front end modules
-    $GLOBALS['FE_MOD']['estatemanager']['realEstateContactPersonList'] = '\\ContaoEstateManager\\Locations\\ModuleContactPersonList';
-    $GLOBALS['FE_MOD']['estatemanager']['realEstateLocationList'] = '\\ContaoEstateManager\\Locations\\ModuleLocationList';
+    $GLOBALS['FE_MOD']['estatemanager']['realEstateContactPersonList'] = '\ContaoEstateManager\Locations\ModuleContactPersonList';
+    $GLOBALS['FE_MOD']['estatemanager']['realEstateLocationList'] = '\ContaoEstateManager\Locations\ModuleLocationList';
 
     // Back end real estate administration modules
     $GLOBALS['TL_RAM']['provider'][] = 'department';
@@ -39,7 +39,10 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
     }
 
     // Hooks
-    $GLOBALS['TL_HOOKS']['replaceInsertTags'][]        = array('\\ContaoEstateManager\\Locations\\Locations', 'replaceInsertTags');
-    $GLOBALS['TL_HOOKS']['countItemsRealEstateList'][] = array('\\ContaoEstateManager\\Locations\\Locations', 'countItems');
-    $GLOBALS['TL_HOOKS']['fetchItemsRealEstateList'][] = array('\\ContaoEstateManager\\Locations\\Locations', 'fetchItems');
+    $GLOBALS['TL_HOOKS']['replaceInsertTags'][]        = array('ContaoEstateManager\Locations\Locations', 'replaceInsertTags');
+    $GLOBALS['TL_HOOKS']['countItemsRealEstateList'][] = array('ContaoEstateManager\Locations\Locations', 'countItems');
+    $GLOBALS['TL_HOOKS']['fetchItemsRealEstateList'][] = array('ContaoEstateManager\Locations\Locations', 'fetchItems');
+
+    // Add permissions
+    $GLOBALS['TL_PERMISSIONS'][] = 'departmentp';
 }

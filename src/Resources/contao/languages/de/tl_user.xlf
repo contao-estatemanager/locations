@@ -1,0 +1,18 @@
+<?xml version="1.0" ?><xliff version="1.1">
+  <file datatype="php" original="src/Resources/contao/languages/en/tl_user.php" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="tl_user.departmentp.0">
+        <source>Department permissions</source>
+        <target>Abteilungen Rechte</target>
+      </trans-unit>
+      <trans-unit id="tl_user.departmentp.1">
+        <source>Here you can define the department permissions.</source>
+        <target>Hier können Sie die Abteilungsrechte festlegen.</target>
+      </trans-unit>
+      <trans-unit id="tl_user.department_legend">
+        <source>Department permissions</source>
+        <target>Abteilungen Rechte</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

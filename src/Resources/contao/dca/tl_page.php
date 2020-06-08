@@ -15,7 +15,8 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         ->applyToPalette('regular', 'tl_page')
     ;
 
-    $GLOBALS['TL_DCA']['tl_page']['fields']['location_token'] = array(
+    $GLOBALS['TL_DCA']['tl_page']['fields']['location_token'] = array
+    (
         'label'                   => &$GLOBALS['TL_LANG']['tl_page']['location_token'],
         'exclude'                 => true,
         'inputType'               => 'text',
