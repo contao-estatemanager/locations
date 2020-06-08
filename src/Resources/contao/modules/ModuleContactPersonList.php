@@ -10,6 +10,13 @@
 
 namespace ContaoEstateManager\Locations;
 
+use Contao\BackendTemplate;
+use Contao\Config;
+use Contao\FilesModel;
+use Contao\FrontendTemplate;
+use Contao\Module;
+use Contao\StringUtil;
+use Contao\Validator;
 use Patchwork\Utf8;
 use ContaoEstateManager\ContactPersonModel;
 use ContaoEstateManager\ProviderModel;
@@ -19,7 +26,7 @@ use ContaoEstateManager\ProviderModel;
  *
  * @author Daniele Sciannimanica <daniele@oveleon.de>
  */
-class ModuleContactPersonList extends \Module
+class ModuleContactPersonList extends Module
 {
     /**
      * Template
@@ -43,7 +50,7 @@ class ModuleContactPersonList extends \Module
         if (TL_MODE == 'BE')
         {
             /** @var BackendTemplate|object $objTemplate */
-            $objTemplate = new \BackendTemplate('be_wildcard');
+            $objTemplate = new BackendTemplate('be_wildcard');
 
             $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['contactpersonlist'][0]) . ' ###';
             $objTemplate->title = $this->headline;
@@ -92,7 +99,7 @@ class ModuleContactPersonList extends \Module
      *
      * @return array
      */
-    protected function parseLocations($objLocations)
+    protected function parseLocations($objLocations): array
     {
         $limit = $objLocations->count();
 
@@ -124,10 +131,10 @@ class ModuleContactPersonList extends \Module
      *
      * @return string
      */
-    protected function parseLocation($objLocation, $strClass='', $intCount=0)
+    protected function parseLocation($objLocation, $strClass='', $intCount=0): string
     {
         /** @var FrontendTemplate|object $objTemplate */
-        $objTemplate = new \FrontendTemplate($this->locationTemplate);
+        $objTemplate = new FrontendTemplate($this->locationTemplate);
 
         if ($objLocation->cssClass != '')
         {
@@ -139,7 +146,7 @@ class ModuleContactPersonList extends \Module
         $objTemplate->contacts = array();
         $objTemplate->showLocationInformation = $this->showLocationInformation;
 
-        $arrMetaFields = \StringUtil::deserialize($this->locationMetaFields, true);
+        $arrMetaFields = StringUtil::deserialize($this->locationMetaFields, true);
 
         foreach ($arrMetaFields as $metaField)
         {
@@ -173,7 +180,7 @@ class ModuleContactPersonList extends \Module
      *
      * @return array
      */
-    protected function parseContactPersons($arrContactPerons)
+    protected function parseContactPersons($arrContactPerons): array
     {
         $limit = count($arrContactPerons);
 
@@ -195,16 +202,16 @@ class ModuleContactPersonList extends \Module
     /**
      * Parse an item and return it as string
      *
-     * @param ProviderModel $objContact
-     * @param string        $strClass
-     * @param integer       $intCount
+     * @param ContactPersonModel $objContact
+     * @param string             $strClass
+     * @param integer            $intCount
      *
      * @return string
      */
-    protected function parseContactPerson($objContact, $strClass='', $intCount=0)
+    protected function parseContactPerson($objContact, $strClass='', $intCount=0): string
     {
-        /** @var FrontendTemplate|object $objTemplate */
-        $objTemplate = new \FrontendTemplate($this->contactPersonTemplate);
+        /** @var FrontendTemplate $objTemplate */
+        $objTemplate = new FrontendTemplate($this->contactPersonTemplate);
 
         if ($objContact->cssClass != '')
         {
@@ -214,7 +221,7 @@ class ModuleContactPersonList extends \Module
         $objTemplate->class = $strClass;
         $objTemplate->addImage = false;
 
-        $arrMetaFields = \StringUtil::deserialize($this->contactPersonMetaFields, true);
+        $arrMetaFields = StringUtil::deserialize($this->contactPersonMetaFields, true);
 
         foreach ($arrMetaFields as $metaField)
         {
@@ -228,15 +235,15 @@ class ModuleContactPersonList extends \Module
                         switch(strtolower($objContact->anrede))
                         {
                             case 'frau':
-                                $varSingleSrc = \Config::get('defaultContactPersonFemaleImage');
+                                $varSingleSrc = Config::get('defaultContactPersonFemaleImage');
                                 break;
                             case 'herr':
-                                $varSingleSrc = \Config::get('defaultContactPersonMaleImage');
+                                $varSingleSrc = Config::get('defaultContactPersonMaleImage');
                                 break;
                         }
 
                         if(!$varSingleSrc){
-                            $varSingleSrc = \Config::get('defaultContactPersonImage');
+                            $varSingleSrc = Config::get('defaultContactPersonImage');
                         }
                     }
 
@@ -260,15 +267,15 @@ class ModuleContactPersonList extends \Module
      * @param $varSingleSrc
      * @param $imgSize
      *
-     * @return boolean
+     * @return bool
      */
-    protected function addSingleImageToTemplate(&$objTemplate, $varSingleSrc, $imgSize)
+    protected function addSingleImageToTemplate(&$objTemplate, $varSingleSrc, $imgSize): bool
     {
         if($varSingleSrc)
         {
-            if (!($varSingleSrc instanceof \FilesModel) && \Validator::isUuid($varSingleSrc))
+            if (!($varSingleSrc instanceof FilesModel) && Validator::isUuid($varSingleSrc))
             {
-                $objModel = \FilesModel::findByUuid($varSingleSrc);
+                $objModel = FilesModel::findByUuid($varSingleSrc);
             }
             else
             {
@@ -301,7 +308,7 @@ class ModuleContactPersonList extends \Module
      *
      * @return array
      */
-    protected function fetchItems()
+    protected function fetchItems(): array
     {
         $arrColumns = array('published=1');
         $arrValues  = array();
@@ -321,7 +328,7 @@ class ModuleContactPersonList extends \Module
 
                 break;
             case 'location_custom':
-                $arrLocationsIds = \StringUtil::deserialize($this->locations);
+                $arrLocationsIds = StringUtil::deserialize($this->locations);
 
                 if($arrLocationsIds !== null)
                 {
@@ -365,7 +372,7 @@ class ModuleContactPersonList extends \Module
         // Reduce departments
         if($this->useSpecificDepartments)
         {
-            $arrDepartmentIds = \StringUtil::deserialize($this->departments);
+            $arrDepartmentIds = StringUtil::deserialize($this->departments);
 
             if($arrDepartmentIds !== null)
             {

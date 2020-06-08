@@ -124,7 +124,7 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
         'eval'                    => array('rgxp'=>'natural', 'includeBlankOption'=>true, 'nospace'=>true, 'helpwizard'=>true, 'tl_class'=>'w50'),
         'options_callback' => function ()
         {
-            return System::getContainer()->get('contao.image.image_sizes')->getOptionsForUser(BackendUser::getInstance());
+            return Contao\System::getContainer()->get('contao.image.image_sizes')->getOptionsForUser(Contao\BackendUser::getInstance());
         },
         'sql'                     => "varchar(64) NOT NULL default ''"
     );
@@ -132,13 +132,14 @@ if(ContaoEstateManager\Locations\AddonManager::valid()) {
     // Extend listMode options
     $GLOBALS['TL_DCA']['tl_module']['fields']['listMode']['options'][] = 'location_dynamic';
 }
+
+
 /**
  * Provide miscellaneous methods that are used by the data configuration array.
  *
  * @author Daniele Sciannimanica <daniele@oveleon.de>
  */
-
-class tl_module_locations extends Backend
+class tl_module_locations extends Contao\Backend
 {
     /**
      * Return all location templates as array
@@ -165,7 +166,7 @@ class tl_module_locations extends Backend
      *
      * @return array
      */
-    public function getLocations()
+    public function getLocations(): array
     {
         $arrLocations = array();
         $objLocations = ContaoEstateManager\ProviderModel::findAll();
@@ -181,11 +182,11 @@ class tl_module_locations extends Backend
     /**
      * Return all departments as array
      *
-     * @param DataContainer $dc
+     * @param Contao\DataContainer $dc
      *
      * @return array
      */
-    public function getDepartments(DataContainer $dc)
+    public function getDepartments(Contao\DataContainer $dc): array
     {
         $arrDepartments = array();
         $objDepartments = ContaoEstateManager\Locations\DepartmentModel::findAll();

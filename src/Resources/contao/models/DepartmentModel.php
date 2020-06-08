@@ -10,6 +10,8 @@
 
 namespace ContaoEstateManager\Locations;
 
+use Contao\Model;
+
 /**
  * Reads and writes departments
  *
@@ -20,8 +22,8 @@ namespace ContaoEstateManager\Locations;
  * @method static DepartmentModel|null findOneBy($col, $val, $opt=array())
  * @method static DepartmentModel|null findOneByTitle($col, $val, $opt=array())
  *
- * @method static \Model\Collection|DepartmentModel[]|DepartmentModel|null findMultipleByIds($val, array $opt=array())
- * @method static \Model\Collection|DepartmentModel[]|DepartmentModel|null findByTitle($val, array $opt=array())
+ * @method static Model\Collection|DepartmentModel[]|DepartmentModel|null findMultipleByIds($val, array $opt=array())
+ * @method static Model\Collection|DepartmentModel[]|DepartmentModel|null findByTitle($val, array $opt=array())
  *
  * @method static integer countById($id, array $opt=array())
  * @method static integer countByTitle($id, array $opt=array())
@@ -29,7 +31,7 @@ namespace ContaoEstateManager\Locations;
  * @author Daniele Sciannimanica <daniele@oveleon.de>
  */
 
-class DepartmentModel extends \Model
+class DepartmentModel extends Model
 {
 
     /**

@@ -7,15 +7,20 @@
   "license":"proprietary",
   "authors":[
     {
-      "name":"Oveleon",
-      "homepage":"https://www.oveleon.de/",
+      "name":"Daniele Sciannimanica",
+      "homepage":"https://github.com/doishub",
+      "role":"Developer"
+    },
+    {
+      "name":"Fabian Ekert",
+      "homepage":"https://github.com/eki89",
       "role":"Developer"
     }
   ],
   "require":{
     "php":">=7.1",
     "contao/core-bundle":"^4.4",
-    "contao-estatemanager/core": "*"
+    "contao-estatemanager/core": "^1.0"
   },
   "require-dev": {
     "contao/manager-plugin": "^2.0"

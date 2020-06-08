@@ -10,6 +10,11 @@
 
 namespace ContaoEstateManager\Locations;
 
+use Contao\FilesModel;
+use Contao\FrontendTemplate;
+use Contao\StringUtil;
+use Contao\System;
+use Contao\Validator;
 use ContaoEstateManager\FilterSession;
 use ContaoEstateManager\ProviderModel;
 use ContaoEstateManager\RealEstateModel;
@@ -100,7 +105,7 @@ class Locations
                 if (strpos($arrTag[2], '?') !== false)
                 {
                     $arrChunks = explode('?', urldecode($arrTag[2]), 2);
-                    $strSource = \StringUtil::decodeEntities($arrChunks[1]);
+                    $strSource = StringUtil::decodeEntities($arrChunks[1]);
                     $strSource = str_replace('[&]', '&', $strSource);
                     $arrParams = explode('&', $strSource);
 
@@ -139,10 +144,10 @@ class Locations
                     $strFile = $objLocation->{$arrChunks[0]};
                 }
 
-                if (\Validator::isUuid($strFile))
+                if (Validator::isUuid($strFile))
                 {
                     // Handle UUIDs
-                    $objFile = \FilesModel::findByUuid($strFile);
+                    $objFile = FilesModel::findByUuid($strFile);
 
                     if ($objFile === null)
                     {
@@ -155,7 +160,7 @@ class Locations
                 elseif (is_numeric($strFile))
                 {
                     // Handle numeric IDs (see #4805)
-                    $objFile = \FilesModel::findByPk($strFile);
+                    $objFile = FilesModel::findByPk($strFile);
 
                     if ($objFile === null)
                     {
@@ -168,7 +173,7 @@ class Locations
                 else
                 {
                     // Check the path
-                    if (\Validator::isInsecurePath($strFile))
+                    if (Validator::isInsecurePath($strFile))
                     {
                         throw new \RuntimeException('Invalid path ' . $strFile);
                     }
@@ -177,7 +182,7 @@ class Locations
                 // Generate the thumbnail image
                 try
                 {
-                    $picture = \System::getContainer()->get('contao.image.picture_factory')->create(TL_ROOT . '/' . $strFile, $size);
+                    $picture = System::getContainer()->get('contao.image.picture_factory')->create(TL_ROOT . '/' . $strFile, $size);
 
                     $picture = array
                     (
@@ -187,7 +192,7 @@ class Locations
 
                     $picture['alt'] = $alt;
                     $picture['class'] = $class;
-                    $pictureTemplate = new \FrontendTemplate($strTemplate);
+                    $pictureTemplate = new FrontendTemplate($strTemplate);
                     $pictureTemplate->setData($picture);
                     $strImageCache = $pictureTemplate->parse();
 
@@ -196,14 +201,14 @@ class Locations
                     {
                         if (strncmp($rel, 'lightbox', 8) !== 0)
                         {
-                            $attribute = ' rel="' . \StringUtil::specialchars($rel) . '"';
+                            $attribute = ' rel="' . StringUtil::specialchars($rel) . '"';
                         }
                         else
                         {
-                            $attribute = ' data-lightbox="' . \StringUtil::specialchars(substr($rel, 8)) . '"';
+                            $attribute = ' data-lightbox="' . StringUtil::specialchars(substr($rel, 8)) . '"';
                         }
 
-                        $strImageCache = '<a href="' . TL_FILES_URL . $strFile . '"' . (($alt != '') ? ' title="' . \StringUtil::specialchars($alt) . '"' : '') . $attribute . '>' . $strImageCache . '</a>';
+                        $strImageCache = '<a href="' . TL_FILES_URL . $strFile . '"' . (($alt != '') ? ' title="' . StringUtil::specialchars($alt) . '"' : '') . $attribute . '>' . $strImageCache . '</a>';
                     }
                 }
                 catch (\Exception $e)
@@ -248,7 +253,7 @@ class Locations
      * @param $intCount
      * @param $context
      */
-    public function countItems(&$intCount, $context)
+    public function countItems(&$intCount, $context): void
     {
         // ToDo: Performance optimieren
         if($context->listMode !== 'location_dynamic')
@@ -293,7 +298,7 @@ class Locations
      * @param $arrOptions
      * @param $context
      */
-    public function fetchItems(&$objRealEstate, $arrOptions, $context)
+    public function fetchItems(&$objRealEstate, $arrOptions, $context): void
     {
         // ToDo: Performance optimieren
         if($context->listMode !== 'location_dynamic')
