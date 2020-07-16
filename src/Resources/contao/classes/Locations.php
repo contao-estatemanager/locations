@@ -288,7 +288,7 @@ class Locations
         $arrColumns[] = "tl_real_estate.anbieternr=?";
         $arrValues[]  = $objProvider->anbieternr;
 
-        $intCount = RealEstateModel::countBy($arrColumns, $arrValues);
+        $intCount = RealEstateModel::countPublishedBy($arrColumns, $arrValues);
     }
 
     /**
@@ -335,6 +335,6 @@ class Locations
         $arrColumns[] = "tl_real_estate.anbieternr=?";
         $arrValues[]  = $objProvider->anbieternr;
 
-        $objRealEstate = RealEstateModel::findBy($arrColumns, $arrValues, $arrOptions);
+        $objRealEstate = RealEstateModel::findPublishedBy($arrColumns, $arrValues, $arrOptions);
     }
 }
