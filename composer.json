@@ -45,6 +45,9 @@
     ]
   },
   "extra":{
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    },
     "contao-manager-plugin": "ContaoEstateManager\\Locations\\ContaoManager\\Plugin"
   }
 }
