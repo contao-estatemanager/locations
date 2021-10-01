@@ -1,11 +1,14 @@
 <?php
-/**
+
+declare(strict_types=1);
+
+/*
  * This file is part of Contao EstateManager.
  *
- * @link      https://www.contao-estatemanager.com/
- * @source    https://github.com/contao-estatemanager/locations
- * @copyright Copyright (c) 2019  Oveleon GbR (https://www.oveleon.de)
- * @license   https://www.contao-estatemanager.com/lizenzbedingungen.html
+ * @see        https://www.contao-estatemanager.com/
+ * @source     https://github.com/contao-estatemanager/locations
+ * @copyright  Copyright (c) 2021 Oveleon GbR (https://www.oveleon.de)
+ * @license    https://www.contao-estatemanager.com/lizenzbedingungen.html
  */
 
 namespace ContaoEstateManager\Locations;
@@ -14,12 +17,13 @@ use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\FilesModel;
 use Contao\FrontendTemplate;
+use Contao\Model\Collection;
 use Contao\Module;
 use Contao\StringUtil;
 use Contao\Validator;
-use Patchwork\Utf8;
 use ContaoEstateManager\ContactPersonModel;
 use ContaoEstateManager\ProviderModel;
+use Patchwork\Utf8;
 
 /**
  * List module for contact person and location records.
@@ -29,34 +33,32 @@ use ContaoEstateManager\ProviderModel;
 class ModuleContactPersonList extends Module
 {
     /**
-     * Template
+     * Template.
+     *
      * @var string
      */
     protected $strTemplate = 'mod_locationlist';
 
     /**
-     * Contact person array
-     * @var array
+     * Contact person array.
      */
-    private $arrContacts = array();
+    private array $arrContacts = [];
 
     /**
-     * Display a wildcard in the back end
-     *
-     * @return string
+     * Display a wildcard in the back end.
      */
     public function generate()
     {
-        if (TL_MODE == 'BE')
+        if (TL_MODE === 'BE')
         {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
 
-            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['contactpersonlist'][0]) . ' ###';
+            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['realEstateContactPersonList'][0]).' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
-            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id='.$this->id;
 
             return $objTemplate->parse();
         }
@@ -65,27 +67,27 @@ class ModuleContactPersonList extends Module
     }
 
     /**
-     * Generate the module
+     * Generate the module.
      */
     protected function compile()
     {
         $this->Template->empty = $GLOBALS['TL_LANG']['MSC']['emptyContactPersonList'];
 
-        list($objLocations, $objContacts) = $this->fetchItems();
+        [$objLocations, $objContacts] = $this->fetchItems();
 
-        if($objLocations === null || $objContacts === null)
+        if (null === $objLocations || null === $objContacts)
         {
             return false;
         }
 
-        while($objContacts->next())
+        while ($objContacts->next())
         {
-            if(!array_key_exists($objContacts->pid, $this->arrContacts))
+            if (!\array_key_exists($objContacts->pid, $this->arrContacts))
             {
-                $this->arrContacts[ $objContacts->pid ] = array();
+                $this->arrContacts[$objContacts->pid] = [];
             }
 
-            $this->arrContacts[ $objContacts->pid ][ $objContacts->id ] = $objContacts->current();
+            $this->arrContacts[$objContacts->pid][$objContacts->id] = $objContacts->current();
         }
 
         // Add the locations
@@ -93,70 +95,60 @@ class ModuleContactPersonList extends Module
     }
 
     /**
-     * Parse one or more items and return them as array
-     *
-     * @param Model\Collection $objLocations
-     *
-     * @return array
+     * Parse one or more items and return them as array.
      */
-    protected function parseLocations($objLocations): array
+    protected function parseLocations(Collection $objLocations): array
     {
         $limit = $objLocations->count();
 
         if ($limit < 1)
         {
-            return array();
+            return [];
         }
 
         $count = 0;
-        $arrLocations = array();
+        $arrLocations = [];
 
         while ($objLocations->next())
         {
             /** @var ProviderModel $objLocation */
             $objLocation = $objLocations->current();
 
-            $arrLocations[] = $this->parseLocation($objLocation, ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even'), $count);
+            $arrLocations[] = $this->parseLocation($objLocation, (1 === ++$count ? ' first' : '').($count === $limit ? ' last' : '').(0 === $count % 2 ? ' odd' : ' even'), $count);
         }
 
         return $arrLocations;
     }
 
     /**
-     * Parse an item and return it as string
-     *
-     * @param ProviderModel $objLocation
-     * @param string        $strClass
-     * @param integer       $intCount
-     *
-     * @return string
+     * Parse an item and return it as string.
      */
-    protected function parseLocation($objLocation, $strClass='', $intCount=0): string
+    protected function parseLocation(ProviderModel $objLocation, string $strClass = '', int $intCount = 0): string
     {
         /** @var FrontendTemplate|object $objTemplate */
         $objTemplate = new FrontendTemplate($this->locationTemplate);
 
-        if ($objLocation->cssClass != '')
+        if ('' !== $objLocation->cssClass)
         {
-            $strClass = ' ' . $objLocation->cssClass . $strClass;
+            $strClass = ' '.$objLocation->cssClass.$strClass;
         }
 
         $objTemplate->class = $strClass;
         $objTemplate->addImage = false;
-        $objTemplate->contacts = array();
+        $objTemplate->contacts = [];
         $objTemplate->showLocationInformation = $this->showLocationInformation;
 
         $arrMetaFields = StringUtil::deserialize($this->locationMetaFields, true);
 
         foreach ($arrMetaFields as $metaField)
         {
-            switch ($metaField)
-            {
+            switch ($metaField) {
                 case 'singleSRC':
                     $objTemplate->addImage = $this->addSingleImageToTemplate($objTemplate, $objLocation->singleSRC, $this->locationImgSize);
                     break;
+
                 default:
-                    if($objLocation->{$metaField})
+                    if ($objLocation->{$metaField})
                     {
                         $objTemplate->{$metaField} = $objLocation->{$metaField};
                     }
@@ -165,57 +157,47 @@ class ModuleContactPersonList extends Module
 
         $providerContactsId = $objLocation->parentProvider ?: $objLocation->id;
 
-        if(array_key_exists($providerContactsId, $this->arrContacts))
+        if (\array_key_exists($providerContactsId, $this->arrContacts))
         {
-            $objTemplate->contacts = $this->parseContactPersons($this->arrContacts[ $providerContactsId ]);
+            $objTemplate->contacts = $this->parseContactPersons($this->arrContacts[$providerContactsId]);
         }
 
         return $objTemplate->parse();
     }
 
     /**
-     * Parse one or more items and return them as array
-     *
-     * @param array $arrContactPerons
-     *
-     * @return array
+     * Parse one or more items and return them as array.
      */
-    protected function parseContactPersons($arrContactPerons): array
+    protected function parseContactPersons(array $arrContactPersons): array
     {
-        $limit = count($arrContactPerons);
+        $limit = \count($arrContactPersons);
 
         if ($limit < 1)
         {
-            return array();
+            return [];
         }
 
         $count = 0;
-        $arrContacts = array();
+        $arrContacts = [];
 
-        foreach ($arrContactPerons as $objContact) {
-            $arrContacts[] = $this->parseContactPerson($objContact, ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even'), $count);
+        foreach ($arrContactPersons as $objContact)
+        {
+            $arrContacts[] = $this->parseContactPerson($objContact, (1 === ++$count ? ' first' : '').($count === $limit ? ' last' : '').(0 === $count % 2 ? ' odd' : ' even'), $count);
         }
 
         return $arrContacts;
     }
 
     /**
-     * Parse an item and return it as string
-     *
-     * @param ContactPersonModel $objContact
-     * @param string             $strClass
-     * @param integer            $intCount
-     *
-     * @return string
+     * Parse an item and return it as string.
      */
-    protected function parseContactPerson($objContact, $strClass='', $intCount=0): string
+    protected function parseContactPerson(ContactPersonModel $objContact, string $strClass = '', int $intCount = 0): string
     {
-        /** @var FrontendTemplate $objTemplate */
         $objTemplate = new FrontendTemplate($this->contactPersonTemplate);
 
-        if ($objContact->cssClass != '')
+        if ('' !== $objContact->cssClass)
         {
-            $strClass = ' ' . $objContact->cssClass . $strClass;
+            $strClass = ' '.$objContact->cssClass.$strClass;
         }
 
         $objTemplate->class = $strClass;
@@ -225,32 +207,33 @@ class ModuleContactPersonList extends Module
 
         foreach ($arrMetaFields as $metaField)
         {
-            switch ($metaField)
-            {
+            switch ($metaField) {
                 case 'singleSRC':
                     $varSingleSrc = $objContact->{$metaField};
 
-                    if(!$varSingleSrc)
+                    if (!$varSingleSrc)
                     {
-                        switch(strtolower($objContact->anrede))
-                        {
+                        switch (strtolower($objContact->anrede)) {
                             case 'frau':
                                 $varSingleSrc = Config::get('defaultContactPersonFemaleImage');
                                 break;
+
                             case 'herr':
                                 $varSingleSrc = Config::get('defaultContactPersonMaleImage');
                                 break;
                         }
 
-                        if(!$varSingleSrc){
+                        if (!$varSingleSrc)
+                        {
                             $varSingleSrc = Config::get('defaultContactPersonImage');
                         }
                     }
 
                     $objTemplate->addImage = $this->addSingleImageToTemplate($objTemplate, $varSingleSrc, $this->contactPersonImgSize);
                     break;
+
                 default:
-                    if($objContact->{$metaField})
+                    if ($objContact->{$metaField})
                     {
                         $objTemplate->{$metaField} = $objContact->{$metaField};
                     }
@@ -261,17 +244,15 @@ class ModuleContactPersonList extends Module
     }
 
     /**
-     * Add image to template
+     * Add image to template.
      *
      * @param $objTemplate
      * @param $varSingleSrc
      * @param $imgSize
-     *
-     * @return bool
      */
     protected function addSingleImageToTemplate(&$objTemplate, $varSingleSrc, $imgSize): bool
     {
-        if($varSingleSrc)
+        if ($varSingleSrc)
         {
             if (!($varSingleSrc instanceof FilesModel) && Validator::isUuid($varSingleSrc))
             {
@@ -282,17 +263,16 @@ class ModuleContactPersonList extends Module
                 $objModel = $varSingleSrc;
             }
 
-            if ($objModel !== null && is_file(TL_ROOT . '/' . $objModel->path))
+            if (null !== $objModel && is_file(TL_ROOT.'/'.$objModel->path))
             {
-                $image = array
-                (
-                    'id'         => $objModel->id,
-                    'uuid'       => $objModel->uuid,
-                    'name'       => $objModel->basename,
-                    'singleSRC'  => $objModel->path,
+                $image = [
+                    'id' => $objModel->id,
+                    'uuid' => $objModel->uuid,
+                    'name' => $objModel->basename,
+                    'singleSRC' => $objModel->path,
                     'filesModel' => $objModel->current(),
-                    'size'       => $imgSize,
-                );
+                    'size' => $imgSize,
+                ];
 
                 $this->addImageToTemplate($objTemplate, $image, null, null, $objModel);
 
@@ -304,50 +284,48 @@ class ModuleContactPersonList extends Module
     }
 
     /**
-     * Fetch the matching items
-     *
-     * @return array
+     * Fetch the matching items.
      */
     protected function fetchItems(): array
     {
-        $arrColumns = array('published=1');
-        $arrValues  = array();
-        $arrOptions = array();
+        $arrColumns = ['published=1'];
+        $arrValues = [];
+        $arrOptions = [];
 
-        switch($this->locationMode)
-        {
+        switch ($this->locationMode) {
             case 'location_page':
                 global $objPage;
                 $intLocationId = $objPage->location;
 
-                if($intLocationId)
+                if ($intLocationId)
                 {
                     $arrColumns[] = 'id=?';
-                    $arrValues[]  = $intLocationId;
+                    $arrValues[] = $intLocationId;
                 }
 
                 break;
+
             case 'location_custom':
                 $arrLocationsIds = StringUtil::deserialize($this->locations);
 
-                if($arrLocationsIds !== null)
+                if (null !== $arrLocationsIds)
                 {
-                    $arrColumns[] = 'id IN (' . implode(',', $arrLocationsIds) . ')';
+                    $arrColumns[] = 'id IN ('.implode(',', $arrLocationsIds).')';
                 }
                 break;
         }
 
-        $arrLocationsIds = array();
+        $arrLocationsIds = [];
         $objLocations = ProviderModel::findBy($arrColumns, $arrValues, $arrOptions);
 
         // Adding the parent provider to be able to deliver their contact persons
-        if($objLocations !== null)
+        if (null !== $objLocations)
         {
-            while($objLocations->next())
+            while ($objLocations->next())
             {
                 $arrLocationsIds[] = $objLocations->id;
 
-                if($objLocations->parentProvider)
+                if ($objLocations->parentProvider)
                 {
                     $arrLocationsIds[] = $objLocations->parentProvider;
                 }
@@ -355,34 +333,37 @@ class ModuleContactPersonList extends Module
         }
 
         // Contact persons
-        $arrColumns = array('published=1');
-        $arrValues  = array();
-        $arrOptions = array('order'=>'department ASC');
+        $arrColumns = ['published=1'];
+        $arrValues = [];
+        $arrOptions = ['order' => 'department ASC'];
 
-        if(count($arrLocationsIds))
+        if (\count($arrLocationsIds))
         {
-            $arrColumns[] = 'pid IN (' . implode(',',$arrLocationsIds) . ')';
+            $arrColumns[] = 'pid IN ('.implode(',', $arrLocationsIds).')';
         }
         else
         {
-            // ToDo: Überflüssig => published=1
             $arrColumns[] = "pid!=''";
         }
 
         // Reduce departments
-        if($this->useSpecificDepartments)
+        if ($this->useSpecificDepartments)
         {
             $arrDepartmentIds = StringUtil::deserialize($this->departments);
 
-            if($arrDepartmentIds !== null)
+            if (null !== $arrDepartmentIds)
             {
-                $arrColumns[] = 'department IN(' . implode(",", $arrDepartmentIds) . ')';
+                $arrColumns[] = 'department IN('.implode(',', $arrDepartmentIds).')';
             }
         }
 
         $objContacts = ContactPersonModel::findBy($arrColumns, $arrValues, $arrOptions);
-        $objLocations->reset();
 
-        return array($objLocations, $objContacts);
+        if ($objLocations)
+        {
+            $objLocations->reset();
+        }
+
+        return [$objLocations, $objContacts];
     }
 }

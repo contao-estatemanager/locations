@@ -1,0 +1,131 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+  <file datatype="php" original="src/Resources/contao/languages/en/tl_locations_meta.php" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="tl_locations_meta.firma">
+        <source>Company</source>
+        <target>Firma</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.vorname">
+        <source>Firstname</source>
+        <target>Vorname</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.name">
+        <source>Lastname</source>
+        <target>Nachname</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.anrede">
+        <source>Salutation</source>
+        <target>Anrede</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.titel">
+        <source>Title</source>
+        <target>Titel</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.position">
+        <source>Position</source>
+        <target>Position</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.plz">
+        <source>Postal code</source>
+        <target>Postleitzahl</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.postleitzahl">
+        <source>Postal code</source>
+        <target>Postleitzahl</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.ort">
+        <source>City</source>
+        <target>Ort</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.strasse">
+        <source>Street</source>
+        <target>Straße</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.hausnummer">
+        <source>House number</source>
+        <target>Hausnummer</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.bundesland">
+        <source>State</source>
+        <target>Bundesland</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.land">
+        <source>Country</source>
+        <target>Land</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.tel_zentrale">
+        <source>Phone (Central)</source>
+        <target>Telefon (Zentrale)</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.tel_durchw">
+        <source>Phone (Direct dial)</source>
+        <target>Telefon (Durchwahl)</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.tel_privat">
+        <source>Phone (Private)</source>
+        <target>Telefon (Privat)</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.tel_handy">
+        <source>Phone (Mobile)</source>
+        <target>Telefon (Handy)</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.tel_sonstige">
+        <source>Phone (Other)</source>
+        <target>Telefon (Sonstige)</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.telefon">
+        <source>Phone</source>
+        <target>Telefon</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.telefon2">
+        <source>Phone (2)</source>
+        <target>Telefon (2)</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.fax">
+        <source>Fax</source>
+        <target>Fax</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.tel_fax">
+        <source>Fax</source>
+        <target>Fax</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.email">
+        <source>Email</source>
+        <target>E-Mail</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.email_zentrale">
+        <source>Email (Central)</source>
+        <target>E-Mail (Zentrale)</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.email_direkt">
+        <source>Email (Direct)</source>
+        <target>E-Mail (Direkt)</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.email_privat">
+        <source>Email (Private)</source>
+        <target>E-Mail (Privat)</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.email_sonstige">
+        <source>Email (Other)</source>
+        <target>E-Mail (Sonstige)</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.email_feedback">
+        <source>Email (Feedback)</source>
+        <target>E-Mail (Feedback)</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.beschreibung">
+        <source>Description</source>
+        <target>Beschreibung</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.beschreibung_standort">
+        <source>Location description</source>
+        <target>Standort-Beschreibung</target>
+      </trans-unit>
+      <trans-unit id="tl_locations_meta.singleSRC">
+        <source>Image / Logo</source>
+        <target>Bild / Logo</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

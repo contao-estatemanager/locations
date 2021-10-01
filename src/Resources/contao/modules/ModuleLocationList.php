@@ -1,11 +1,14 @@
 <?php
-/**
+
+declare(strict_types=1);
+
+/*
  * This file is part of Contao EstateManager.
  *
- * @link      https://www.contao-estatemanager.com/
- * @source    https://github.com/contao-estatemanager/locations
- * @copyright Copyright (c) 2019  Oveleon GbR (https://www.oveleon.de)
- * @license   https://www.contao-estatemanager.com/lizenzbedingungen.html
+ * @see        https://www.contao-estatemanager.com/
+ * @source     https://github.com/contao-estatemanager/locations
+ * @copyright  Copyright (c) 2021 Oveleon GbR (https://www.oveleon.de)
+ * @license    https://www.contao-estatemanager.com/lizenzbedingungen.html
  */
 
 namespace ContaoEstateManager\Locations;
@@ -16,9 +19,9 @@ use Contao\FrontendTemplate;
 use Contao\Module;
 use Contao\StringUtil;
 use Contao\Validator;
-use Patchwork\Utf8;
-use ContaoEstateManager\ContactPersonModel;
 use ContaoEstateManager\ProviderModel;
+use Model\Collection;
+use Patchwork\Utf8;
 
 /**
  * List module for location records.
@@ -28,28 +31,29 @@ use ContaoEstateManager\ProviderModel;
 class ModuleLocationList extends Module
 {
     /**
-     * Template
+     * Template.
+     *
      * @var string
      */
     protected $strTemplate = 'mod_locationlist';
 
     /**
-     * Display a wildcard in the back end
+     * Display a wildcard in the back end.
      *
      * @return string
      */
     public function generate()
     {
-        if (TL_MODE == 'BE')
+        if (TL_MODE === 'BE')
         {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
 
-            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['locationlist'][0]) . ' ###';
+            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['realEstateLocationList'][0]).' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
-            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id='.$this->id;
 
             return $objTemplate->parse();
         }
@@ -58,7 +62,7 @@ class ModuleLocationList extends Module
     }
 
     /**
-     * Generate the module
+     * Generate the module.
      */
     protected function compile()
     {
@@ -66,7 +70,7 @@ class ModuleLocationList extends Module
 
         $objLocations = $this->fetchItems();
 
-        if($objLocations === null)
+        if (null === $objLocations)
         {
             return false;
         }
@@ -76,70 +80,59 @@ class ModuleLocationList extends Module
     }
 
     /**
-     * Parse one or more items and return them as array
-     *
-     * @param Model\Collection $objLocations
-     *
-     * @return array
+     * Parse one or more items and return them as array.
      */
-    protected function parseLocations($objLocations): array
+    protected function parseLocations(Collection $objLocations): array
     {
         $limit = $objLocations->count();
 
         if ($limit < 1)
         {
-            return array();
+            return [];
         }
 
         $count = 0;
-        $arrLocations = array();
+        $arrLocations = [];
 
         while ($objLocations->next())
         {
             /** @var ProviderModel $objLocation */
             $objLocation = $objLocations->current();
 
-            $arrLocations[] = $this->parseLocation($objLocation, ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even'), $count);
+            $arrLocations[] = $this->parseLocation($objLocation, (1 === ++$count ? ' first' : '').($count === $limit ? ' last' : '').(0 === $count % 2 ? ' odd' : ' even'), $count);
         }
 
         return $arrLocations;
     }
 
     /**
-     * Parse an item and return it as string
-     *
-     * @param ProviderModel $objLocation
-     * @param string        $strClass
-     * @param integer       $intCount
-     *
-     * @return string
+     * Parse an item and return it as string.
      */
-    protected function parseLocation($objLocation, $strClass='', $intCount=0): string
+    protected function parseLocation(ProviderModel $objLocation, string $strClass = '', int $intCount = 0): string
     {
-        /** @var FrontendTemplate|object $objTemplate */
         $objTemplate = new FrontendTemplate($this->locationTemplate);
 
-        if ($objLocation->cssClass != '')
+        if ('' !== $objLocation->cssClass)
         {
-            $strClass = ' ' . $objLocation->cssClass . $strClass;
+            $strClass = ' '.$objLocation->cssClass.$strClass;
         }
 
         $objTemplate->class = $strClass;
         $objTemplate->addImage = false;
         $objTemplate->showLocationInformation = true;
-        $objTemplate->contacts = array();
+        $objTemplate->contacts = [];
 
         $arrMetaFields = StringUtil::deserialize($this->locationMetaFields, true);
 
         foreach ($arrMetaFields as $metaField)
         {
-            switch ($metaField)
-            {
+            switch ($metaField) {
                 case 'singleSRC':
                     $objTemplate->addImage = $this->addSingleImageToTemplate($objTemplate, $objLocation->singleSRC, $this->locationImgSize);
                     break;
+
                 default:
-                    if($objLocation->{$metaField})
+                    if ($objLocation->{$metaField})
                     {
                         $objTemplate->{$metaField} = $objLocation->{$metaField};
                     }
@@ -150,13 +143,11 @@ class ModuleLocationList extends Module
     }
 
     /**
-     * Add image to template
+     * Add image to template.
      *
      * @param $objTemplate
      * @param $varSingleSrc
      * @param $imgSize
-     *
-     * @return bool
      */
     protected function addSingleImageToTemplate(&$objTemplate, $varSingleSrc, $imgSize): bool
     {
@@ -171,17 +162,16 @@ class ModuleLocationList extends Module
                 $objModel = $varSingleSrc;
             }
 
-            if ($objModel !== null && is_file(TL_ROOT . '/' . $objModel->path))
+            if (null !== $objModel && is_file(TL_ROOT.'/'.$objModel->path))
             {
-                $image = array
-                (
-                    'id'         => $objModel->id,
-                    'uuid'       => $objModel->uuid,
-                    'name'       => $objModel->basename,
-                    'singleSRC'  => $objModel->path,
+                $image = [
+                    'id' => $objModel->id,
+                    'uuid' => $objModel->uuid,
+                    'name' => $objModel->basename,
+                    'singleSRC' => $objModel->path,
                     'filesModel' => $objModel->current(),
-                    'size'       => $imgSize,
-                );
+                    'size' => $imgSize,
+                ];
 
                 $this->addImageToTemplate($objTemplate, $image, null, null, $objModel);
 
@@ -193,7 +183,7 @@ class ModuleLocationList extends Module
     }
 
     /**
-     * Fetch the matching items
+     * Fetch the matching items.
      *
      * @return \Contao\Model\Collection|ProviderModel|null
      */
@@ -203,29 +193,29 @@ class ModuleLocationList extends Module
         $intLocationId = null;
         $arrLocationsIds = null;
 
-        $arrColumns = array('published=1');
-        $arrValues  = array();
-        $arrOptions = array();
+        $arrColumns = ['published=1'];
+        $arrValues = [];
+        $arrOptions = [];
 
-        switch($this->locationMode)
-        {
+        switch ($this->locationMode) {
             case 'location_page':
                 global $objPage;
                 $intLocationId = $objPage->location;
 
-                if($intLocationId)
+                if ($intLocationId)
                 {
                     $arrColumns[] = 'id=?';
-                    $arrValues[]  = $intLocationId;
+                    $arrValues[] = $intLocationId;
                 }
 
                 break;
+
             case 'location_custom':
                 $arrLocationsIds = StringUtil::deserialize($this->locations);
 
-                if($arrLocationsIds !== null)
+                if (null !== $arrLocationsIds)
                 {
-                    $arrColumns[] = 'id IN (' . implode(',',$arrLocationsIds) . ')';
+                    $arrColumns[] = 'id IN ('.implode(',', $arrLocationsIds).')';
                 }
 
                 break;

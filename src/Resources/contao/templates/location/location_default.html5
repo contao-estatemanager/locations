@@ -37,6 +37,9 @@
         <?php if($this->beschreibung):?>
             <span class="description"><?=$this->beschreibung?></span>
         <?php endif; ?>
+        <?php if($this->beschreibung_standort):?>
+            <span class="description location"><?=$this->beschreibung_standort?></span>
+        <?php endif; ?>
     </address>
 <?php endif; ?>
 <?php if(count($this->contacts)): ?>
