@@ -6,7 +6,7 @@ use PhpCsFixer\Fixer\Basic\BracesFixer;
 use PhpCsFixer\Fixer\Comment\HeaderCommentFixer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symplify\EasyCodingStandard\ValueObject\Option;
-use \SlevomatCodingStandard\Sniffs\TypeHints\DisallowArrayTypeHintSyntaxSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\DisallowArrayTypeHintSyntaxSniff;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(__DIR__.'/vendor/contao/easy-coding-standard/config/set/contao.php');
