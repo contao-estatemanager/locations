@@ -32,10 +32,7 @@ if (AddonManager::valid())
     $GLOBALS['FE_MOD']['estatemanager']['realEstateLocationList'] = '\ContaoEstateManager\Locations\ModuleLocationList';
 
     // Back end real estate administration modules
-    $GLOBALS['TL_RAM']['provider'][] = 'department';
-
-    // Add permissions
-    $GLOBALS['TL_PERMISSIONS'][] = 'department';
+    $GLOBALS['CEM_RAM']['provider'][] = 'department';
 
     // Hooks
     $GLOBALS['TL_HOOKS']['replaceInsertTags'][] = ['ContaoEstateManager\Locations\Locations', 'replaceInsertTags'];
@@ -43,5 +40,6 @@ if (AddonManager::valid())
     $GLOBALS['TL_HOOKS']['fetchItemsRealEstateList'][] = ['ContaoEstateManager\Locations\Locations', 'fetchItems'];
 
     // Add permissions
+    $GLOBALS['TL_PERMISSIONS'][] = 'department';
     $GLOBALS['TL_PERMISSIONS'][] = 'departmentp';
 }

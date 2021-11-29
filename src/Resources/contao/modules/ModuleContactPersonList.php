@@ -20,6 +20,7 @@ use Contao\FrontendTemplate;
 use Contao\Model\Collection;
 use Contao\Module;
 use Contao\StringUtil;
+use Contao\System;
 use Contao\Validator;
 use ContaoEstateManager\ContactPersonModel;
 use ContaoEstateManager\ProviderModel;
@@ -62,6 +63,8 @@ class ModuleContactPersonList extends Module
 
             return $objTemplate->parse();
         }
+
+        System::loadLanguageFile('tl_contact_person');
 
         return parent::generate();
     }
@@ -231,7 +234,12 @@ class ModuleContactPersonList extends Module
 
                     $objTemplate->addImage = $this->addSingleImageToTemplate($objTemplate, $varSingleSrc, $this->contactPersonImgSize);
                     break;
-
+                case 'anrede':
+                    if ($objContact->{$metaField} && $objContact->{$metaField} !== 'divers' && $translatedSalutation = ($GLOBALS['TL_LANG']['tl_contact_person'][$objContact->{$metaField}][0] ?? null))
+                    {
+                        $objTemplate->{$metaField} = $translatedSalutation;
+                    }
+                    break;
                 default:
                     if ($objContact->{$metaField})
                     {
