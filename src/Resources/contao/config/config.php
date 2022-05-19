@@ -15,6 +15,7 @@ declare(strict_types=1);
 $GLOBALS['TL_ESTATEMANAGER_ADDONS'][] = ['ContaoEstateManager\Locations', 'AddonManager'];
 
 use ContaoEstateManager\Locations\AddonManager;
+use ContaoEstateManager\Locations\Locations;
 
 if (AddonManager::valid())
 {
@@ -35,9 +36,10 @@ if (AddonManager::valid())
     $GLOBALS['CEM_RAM']['provider'][] = 'department';
 
     // Hooks
-    $GLOBALS['TL_HOOKS']['replaceInsertTags'][] = ['ContaoEstateManager\Locations\Locations', 'replaceInsertTags'];
-    $GLOBALS['TL_HOOKS']['countItemsRealEstateList'][] = ['ContaoEstateManager\Locations\Locations', 'countItems'];
-    $GLOBALS['TL_HOOKS']['fetchItemsRealEstateList'][] = ['ContaoEstateManager\Locations\Locations', 'fetchItems'];
+    $GLOBALS['TL_HOOKS']['replaceInsertTags'][] = [Locations::class, 'replaceInsertTags'];
+
+    $GLOBALS['CEM_HOOKS']['countItemsRealEstateList'][] = [Locations::class, 'countItems'];
+    $GLOBALS['CEM_HOOKS']['fetchItemsRealEstateList'][] = [Locations::class, 'fetchItems'];
 
     // Add permissions
     $GLOBALS['TL_PERMISSIONS'][] = 'department';
