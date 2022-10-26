@@ -24,7 +24,6 @@ use Contao\System;
 use Contao\Validator;
 use ContaoEstateManager\ContactPersonModel;
 use ContaoEstateManager\ProviderModel;
-use Patchwork\Utf8;
 
 /**
  * List module for contact person and location records.
@@ -55,7 +54,7 @@ class ModuleContactPersonList extends Module
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
 
-            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['realEstateContactPersonList'][0]).' ###';
+            $objTemplate->wildcard = '### '.mb_strtoupper($GLOBALS['TL_LANG']['FMD']['realEstateContactPersonList'][0], 'UTF-8').' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
