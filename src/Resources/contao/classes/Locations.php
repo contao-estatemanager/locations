@@ -1,17 +1,21 @@
 <?php
-/**
+
+declare(strict_types=1);
+
+/*
  * This file is part of Contao EstateManager.
  *
- * @link      https://www.contao-estatemanager.com/
- * @source    https://github.com/contao-estatemanager/locations
- * @copyright Copyright (c) 2019  Oveleon GbR (https://www.oveleon.de)
- * @license   https://www.contao-estatemanager.com/lizenzbedingungen.html
+ * @see        https://www.contao-estatemanager.com/
+ * @source     https://github.com/contao-estatemanager/locations
+ * @copyright  Copyright (c) 2021 Oveleon GbR (https://www.oveleon.de)
+ * @license    https://www.contao-estatemanager.com/lizenzbedingungen.html
  */
 
 namespace ContaoEstateManager\Locations;
 
 use Contao\FilesModel;
 use Contao\FrontendTemplate;
+use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Validator;
@@ -22,7 +26,7 @@ use ContaoEstateManager\RealEstateModel;
 class Locations
 {
     /**
-     * Replace insert tags
+     * Replace insert tags.
      *
      * - by site reference
      * {{location::current::address}}
@@ -39,23 +43,25 @@ class Locations
     {
         $arrTag = explode('::', $strTag);
 
-        if ($arrTag[0] != 'location') {
+        if ('location' !== $arrTag[0])
+        {
             return false;
         }
 
         global $objPage;
 
-        if ($arrTag[1] === 'token')
+        if ('token' === $arrTag[1])
         {
-            if($objPage->location_token)
+            if ($objPage->location_token)
             {
                 return $objPage->location_token;
             }
-            elseif(!!$objPage->location)
+
+            if ((bool) $objPage->location)
             {
                 $objLocation = ProviderModel::findById($objPage->location);
 
-                if($objLocation !== null)
+                if (null !== $objLocation)
                 {
                     return $objLocation->ort;
                 }
@@ -63,46 +69,43 @@ class Locations
 
             return false;
         }
-        elseif($arrTag[1] === 'current' && !!$objPage->location)
+
+        if ('current' === $arrTag[1] && (bool) $objPage->location)
         {
             $intLocationId = $objPage->location;
         }
-        elseif(is_numeric($arrTag[1]))
+        elseif (is_numeric($arrTag[1]))
         {
             $intLocationId = $arrTag[1];
         }
-        else{
+        else
+        {
             return false;
         }
 
         $objLocation = ProviderModel::findById($intLocationId);
 
-        if($objLocation === null)
+        if (null === $objLocation)
         {
             return false;
         }
 
         $clearedTag = explode('?', urldecode($arrTag[2]), 2)[0];
 
-        switch($clearedTag)
-        {
+        switch ($clearedTag) {
             case 'panoramaSingleSRC':
             case 'locationSingleSRC':
             case 'teamSingleSRC':
             case 'singleSRC':
-                $strImageCache = '';
-                $width = null;
-                $height = null;
                 $alt = '';
                 $class = '';
                 $rel = '';
                 $strFile = $objLocation->{$clearedTag};
-                $mode = '';
                 $size = null;
                 $strTemplate = 'picture_default';
 
                 // Take arguments
-                if (strpos($arrTag[2], '?') !== false)
+                if (false !== strpos($arrTag[2], '?'))
                 {
                     $arrChunks = explode('?', urldecode($arrTag[2]), 2);
                     $strSource = StringUtil::decodeEntities($arrChunks[1]);
@@ -111,10 +114,9 @@ class Locations
 
                     foreach ($arrParams as $strParam)
                     {
-                        list($key, $value) = explode('=', $strParam);
+                        [$key, $value] = explode('=', $strParam);
 
-                        switch ($key)
-                        {
+                        switch ($key) {
                             case 'alt':
                                 $alt = $value;
                                 break;
@@ -125,10 +127,6 @@ class Locations
 
                             case 'rel':
                                 $rel = $value;
-                                break;
-
-                            case 'mode':
-                                $mode = $value;
                                 break;
 
                             case 'size':
@@ -149,9 +147,8 @@ class Locations
                     // Handle UUIDs
                     $objFile = FilesModel::findByUuid($strFile);
 
-                    if ($objFile === null)
+                    if (null === $objFile)
                     {
-                        $strImageCache = '';
                         return '';
                     }
 
@@ -162,9 +159,8 @@ class Locations
                     // Handle numeric IDs (see #4805)
                     $objFile = FilesModel::findByPk($strFile);
 
-                    if ($objFile === null)
+                    if (null === $objFile)
                     {
-                        $strImageCache = '';
                         return '';
                     }
 
@@ -175,20 +171,19 @@ class Locations
                     // Check the path
                     if (Validator::isInsecurePath($strFile))
                     {
-                        throw new \RuntimeException('Invalid path ' . $strFile);
+                        throw new \RuntimeException('Invalid path '.$strFile);
                     }
                 }
 
                 // Generate the thumbnail image
                 try
                 {
-                    $picture = System::getContainer()->get('contao.image.picture_factory')->create(TL_ROOT . '/' . $strFile, $size);
+                    $picture = System::getContainer()->get('contao.image.picture_factory')->create(TL_ROOT.'/'.$strFile, $size);
 
-                    $picture = array
-                    (
+                    $picture = [
                         'img' => $picture->getImg(TL_ROOT, TL_FILES_URL),
-                        'sources' => $picture->getSources(TL_ROOT, TL_FILES_URL)
-                    );
+                        'sources' => $picture->getSources(TL_ROOT, TL_FILES_URL),
+                    ];
 
                     $picture['alt'] = $alt;
                     $picture['class'] = $class;
@@ -197,18 +192,18 @@ class Locations
                     $strImageCache = $pictureTemplate->parse();
 
                     // Add a lightbox link
-                    if ($rel != '')
+                    if ('' !== $rel)
                     {
-                        if (strncmp($rel, 'lightbox', 8) !== 0)
+                        if (0 !== strncmp($rel, 'lightbox', 8))
                         {
-                            $attribute = ' rel="' . StringUtil::specialchars($rel) . '"';
+                            $attribute = ' rel="'.StringUtil::specialchars($rel).'"';
                         }
                         else
                         {
-                            $attribute = ' data-lightbox="' . StringUtil::specialchars(substr($rel, 8)) . '"';
+                            $attribute = ' data-lightbox="'.StringUtil::specialchars(substr($rel, 8)).'"';
                         }
 
-                        $strImageCache = '<a href="' . TL_FILES_URL . $strFile . '"' . (($alt != '') ? ' title="' . StringUtil::specialchars($alt) . '"' : '') . $attribute . '>' . $strImageCache . '</a>';
+                        $strImageCache = '<a href="'.TL_FILES_URL.$strFile.'"'.('' !== $alt ? ' title="'.StringUtil::specialchars($alt).'"' : '').$attribute.'>'.$strImageCache.'</a>';
                     }
                 }
                 catch (\Exception $e)
@@ -219,24 +214,25 @@ class Locations
                 return $strImageCache;
 
             case 'address':
-                $strAddress = array();
+                $strAddress = [];
 
                 $plz = $objLocation->postleitzahl;
                 $ort = $objLocation->ort;
 
-                if($objLocation->hausnummer && $objLocation->strasse)
+                if ($objLocation->hausnummer && $objLocation->strasse)
                 {
-                    $strAddress[] = $objLocation->strasse . ' ' . $objLocation->hausnummer;
-                }elseif($objLocation->strasse)
+                    $strAddress[] = $objLocation->strasse.' '.$objLocation->hausnummer;
+                }
+                elseif ($objLocation->strasse)
                 {
                     $strAddress[] = $objLocation->strasse;
                 }
 
-                if($plz && $ort)
+                if ($plz && $ort)
                 {
-                    $strAddress[] = $plz . ' ' . $ort;
+                    $strAddress[] = $plz.' '.$ort;
                 }
-                elseif($ort)
+                elseif ($ort)
                 {
                     $strAddress[] = $ort;
                 }
@@ -248,7 +244,7 @@ class Locations
     }
 
     /**
-     * Count properties of assigned provider
+     * Count properties of assigned provider.
      *
      * @param $intCount
      * @param $context
@@ -256,16 +252,16 @@ class Locations
     public function countItems(&$intCount, $context): void
     {
         // ToDo: Performance optimieren
-        if($context->listMode !== 'location_dynamic')
+        if ('location_dynamic' !== $context->listMode)
         {
             return;
         }
 
         $objFilterSession = FilterSession::getInstance();
 
-        list($arrColumns, $arrValues, $arrOptions) = $objFilterSession->getTypeParameterByGroups($context->realEstateGroups, $context->filterMode, false, $context);
+        [$arrColumns, $arrValues] = $objFilterSession->getTypeParameterByGroups($context->realEstateGroups, $context->filterMode, false, $context);
 
-        /** @var \PageModel $objPage */
+        /** @var PageModel $objPage */
         global $objPage;
 
         if (!$objPage->location)
@@ -275,7 +271,7 @@ class Locations
 
         $objProvider = ProviderModel::findByPk($objPage->location);
 
-        if ($objProvider === null)
+        if (null === $objProvider)
         {
             return;
         }
@@ -285,14 +281,14 @@ class Locations
             $objProvider = ProviderModel::findByPk($objProvider->parentProvider);
         }
 
-        $arrColumns[] = "tl_real_estate.anbieternr=?";
-        $arrValues[]  = $objProvider->anbieternr;
+        $arrColumns[] = 'tl_real_estate.anbieternr=?';
+        $arrValues[] = $objProvider->anbieternr;
 
         $intCount = RealEstateModel::countPublishedBy($arrColumns, $arrValues);
     }
 
     /**
-     * Fetch properties of assigned provider
+     * Fetch properties of assigned provider.
      *
      * @param $objRealEstate
      * @param $arrOptions
@@ -301,14 +297,14 @@ class Locations
     public function fetchItems(&$objRealEstate, $arrOptions, $context): void
     {
         // ToDo: Performance optimieren
-        if($context->listMode !== 'location_dynamic')
+        if ('location_dynamic' !== $context->listMode)
         {
             return;
         }
 
         $objFilterSession = FilterSession::getInstance();
 
-        list($arrColumns, $arrValues, $options) = $objFilterSession->getTypeParameterByGroups($context->realEstateGroups, $context->filterMode, false, $context);
+        [$arrColumns, $arrValues, $options] = $objFilterSession->getTypeParameterByGroups($context->realEstateGroups, $context->filterMode, false, $context);
 
         $arrOptions = array_merge($options, $arrOptions);
 
@@ -322,7 +318,7 @@ class Locations
 
         $objProvider = ProviderModel::findByPk($objPage->location);
 
-        if ($objProvider === null)
+        if (null === $objProvider)
         {
             return;
         }
@@ -332,8 +328,8 @@ class Locations
             $objProvider = ProviderModel::findByPk($objProvider->parentProvider);
         }
 
-        $arrColumns[] = "tl_real_estate.anbieternr=?";
-        $arrValues[]  = $objProvider->anbieternr;
+        $arrColumns[] = 'tl_real_estate.anbieternr=?';
+        $arrValues[] = $objProvider->anbieternr;
 
         $objRealEstate = RealEstateModel::findPublishedBy($arrColumns, $arrValues, $arrOptions);
     }

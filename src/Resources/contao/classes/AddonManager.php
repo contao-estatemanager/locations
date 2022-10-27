@@ -1,11 +1,14 @@
 <?php
-/**
+
+declare(strict_types=1);
+
+/*
  * This file is part of Contao EstateManager.
  *
- * @link      https://www.contao-estatemanager.com/
- * @source    https://github.com/contao-estatemanager/locations
- * @copyright Copyright (c) 2019  Oveleon GbR (https://www.oveleon.de)
- * @license   https://www.contao-estatemanager.com/lizenzbedingungen.html
+ * @see        https://www.contao-estatemanager.com/
+ * @source     https://github.com/contao-estatemanager/locations
+ * @copyright  Copyright (c) 2021 Oveleon GbR (https://www.oveleon.de)
+ * @license    https://www.contao-estatemanager.com/lizenzbedingungen.html
  */
 
 namespace ContaoEstateManager\Locations;
@@ -17,37 +20,43 @@ use ContaoEstateManager\EstateManager;
 class AddonManager
 {
     /**
-     * Bundle name
+     * Bundle name.
+     *
      * @var string
      */
     public static $bundle = 'EstateManagerLocations';
 
     /**
-     * Package
+     * Package.
+     *
      * @var string
      */
     public static $package = 'contao-estatemanager/locations';
 
     /**
-     * Addon config key
+     * Addon config key.
+     *
      * @var string
      */
-    public static $key  = 'addon_locations_license';
+    public static $key = 'addon_locations_license';
 
     /**
-     * Is initialized
-     * @var boolean
+     * Is initialized.
+     *
+     * @var bool
      */
-    public static $initialized  = false;
+    public static $initialized = false;
 
     /**
-     * Is valid
-     * @var boolean
+     * Is valid.
+     *
+     * @var bool
      */
-    public static $valid  = false;
+    public static $valid = false;
 
     /**
-     * Licenses
+     * Licenses.
+     *
      * @var array
      */
     private static $licenses = [
@@ -100,7 +109,7 @@ class AddonManager
         '71da3820b1d24a94889658358ced2136',
         '8b38ef7c1a519e982d77d7a9150656dc',
         'e463033823e88d245b609740352140d0',
-        '8a745b3103a0e62f86e81c5f66be1cd6'
+        '8a745b3103a0e62f86e81c5f66be1cd6',
     ];
 
     public static function getLicenses()
@@ -110,12 +119,12 @@ class AddonManager
 
     public static function valid()
     {
-        if(Environment::get('requestUri') === '/contao/install')
+        if ('/contao/install' === Environment::get('requestUri'))
         {
             return true;
         }
 
-        if (static::$initialized === false)
+        if (false === static::$initialized)
         {
             static::$valid = EstateManager::checkLicenses(Config::get(static::$key), static::$licenses, static::$key);
             static::$initialized = true;
@@ -123,5 +132,4 @@ class AddonManager
 
         return static::$valid;
     }
-
 }
