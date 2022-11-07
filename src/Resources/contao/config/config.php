@@ -20,7 +20,7 @@ use ContaoEstateManager\Locations\Locations;
 if (AddonManager::valid())
 {
     // Backend modules
-    $GLOBALS['BE_MOD']['estatemanager']['department'] = [
+    $GLOBALS['BE_MOD']['real_estate']['department'] = [
         'tables' => ['tl_department'],
         'hideInNavigation' => true,
     ];
